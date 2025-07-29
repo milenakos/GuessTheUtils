@@ -64,6 +64,7 @@ borsa:
 - Purse
 baget:
 - Baguette
+- Drum Sticks
 firin:
 - Bakery
 - Furnace
@@ -674,8 +675,6 @@ garagem:
 - Garage
 dob:
 - Drum
-baqueta:
-- Drum Sticks
 peso:
 - Dumbbell
 - Weights
