@@ -1038,6 +1038,7 @@ panal:
 - Honeycomb
 hak:
 - Hook
+- Grappling Hook
 loverseny:
 - Horse Racing
 lo:
@@ -2293,8 +2294,6 @@ zombikiyameti:
 - Zombie Apocalypse
 aula:
 - Lecture Hall
-grappin:
-- Grappling Hook
 krb:
 - Fireplace
 smed:
