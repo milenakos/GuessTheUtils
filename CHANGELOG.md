@@ -7,3 +7,4 @@
 - Added `supermarkt` shortcut for `Supermarket` theme
 - Added `cheminee` shortcut for `Chimney` and `Fireplace` themes
 - Changed `Grappling Hook` theme to `Hak` shortcut
+- Changed `Fruit Punch` theme to `ponch` shortcut
