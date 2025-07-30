@@ -2301,3 +2301,6 @@ smed:
 - Blacksmith
 supermarkt:
 - Supermarket
+cheminee:
+  - Chimney
+  - Fireplace
