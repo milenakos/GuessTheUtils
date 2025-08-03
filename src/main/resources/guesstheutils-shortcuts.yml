@@ -1100,6 +1100,7 @@ insect:
 nastroj:
 - Instrument
 va:
+- Iron
 - Vase
 bugelbrett:
 - Ironing Board
@@ -2302,5 +2303,8 @@ smed:
 supermarkt:
 - Supermarket
 cheminee:
-  - Chimney
-  - Fireplace
+- Chimney
+- Fireplace
+robot:
+- Robot
+- Cyborg

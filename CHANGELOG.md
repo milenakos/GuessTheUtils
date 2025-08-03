@@ -10,3 +10,5 @@
 - Changed `Fruit Punch` theme to `ponch` shortcut
 - Added `Wire` theme to `cavo` shortcut
 - Changed `cela` shortcut to `cella`
+- Added `Iron` theme to `va` shortcut
+- Added `Cyborg` theme to `robot` shortcut
