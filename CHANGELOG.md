@@ -1,7 +1,6 @@
 # GuessTheUtils 0.9.6
 
 ## Shortcuts List Changes
-### lunaeclipse4:
 - Changed `Drum Sticks` theme to `baget` shortcut
 - Removed `Theatre` theme from `cine` shortcut
 - Added `supermarkt` shortcut for `Supermarket` theme
@@ -12,3 +11,5 @@
 - Changed `cela` shortcut to `cella`
 - Added `Iron` theme to `va` shortcut
 - Added `Cyborg` theme to `robot` shortcut
+- Added `Meadow` theme to `prato` shortcut
+- Changed `dom` shortcut to `ev`

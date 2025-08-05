@@ -615,6 +615,7 @@ discobal:
 prato:
 - Dish
 - Plate
+- Meadow
 zmywarka:
 - Dishwasher
 werfer:
@@ -1058,7 +1059,7 @@ otel:
 - Hotel
 timgla:
 - Hourglass
-dom:
+ev:
 - House
 aro:
 - Hula Hoop
