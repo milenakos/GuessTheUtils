@@ -13,3 +13,9 @@
 - Added `Cyborg` theme to `robot` shortcut
 - Added `Meadow` theme to `prato` shortcut
 - Changed `dom` shortcut to `ev`
+
+## Bug Fixes
+- Fixed a bug where certain lines from `/g member <name>` would be considered as player messages, resulting in the tracker becoming very confused (thanks @potato1075)
+
+## Improvements
+- Added an easy way to open replays folder by clicking on the replay saved message, or executing `/guesstheutils replay open`

@@ -1,0 +1,33 @@
+[
+  {
+    "chatMessages":
+    [
+      "{\"text\":\"\",\"extra\":[{\"text\":\"Experienced \",\"obfuscated\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"color\":\"#55FFFF\",\"bold\":false},{\"text\":\"§7mysteeri_soossi§7\",\"hoverEvent\":{\"contents\":{\"text\":\"§eClick to show social options for §7mysteeri_soossi\",\"strikethrough\":false},\"action\":\"show_text\"},\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/socialoptions mysteeri_soossi\"},\"strikethrough\":false},{\"text\":\": vegetables\",\"obfuscated\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"color\":\"#AAAAAA\",\"bold\":false}],\"strikethrough\":false}",
+      "{\"text\":\"\",\"extra\":[{\"text\":\"≈ \",\"obfuscated\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"color\":\"#FFFF55\",\"bold\":false},{\"text\":\"Expert \",\"obfuscated\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"color\":\"#AA0000\",\"bold\":false},{\"text\":\"[MVP\",\"obfuscated\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"color\":\"#55FFFF\",\"bold\":false},{\"text\":\"+\",\"obfuscated\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"color\":\"#FFFF55\",\"bold\":false},{\"text\":\"] Yria\",\"obfuscated\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"color\":\"#55FFFF\",\"bold\":false},{\"text\":\": letter\",\"obfuscated\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"color\":\"#FFFFFF\",\"bold\":false}],\"strikethrough\":false}",
+      "{\"text\":\"\",\"extra\":[{\"text\":\"π \",\"obfuscated\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"color\":\"#AA00AA\",\"bold\":false},{\"text\":\"Grandmaster \",\"obfuscated\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"color\":\"#55FFFF\",\"bold\":true},{\"text\":\"§b[MVP§0+§b] imclickertrained§f\",\"hoverEvent\":{\"contents\":{\"text\":\"§eClick to show social options for §bimclickertrained\",\"strikethrough\":false},\"action\":\"show_text\"},\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/socialoptions imclickertrained\"},\"strikethrough\":false},{\"text\":\": tereis\",\"obfuscated\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"color\":\"#FFFFFF\",\"bold\":false}],\"strikethrough\":false}",
+      "{\"text\":\"\",\"extra\":[{\"text\":\"§7[GUESSER CHAT] §b[MVP§0+§b] imclickertrained§f\",\"hoverEvent\":{\"contents\":{\"text\":\"§eClick to show social options for §bimclickertrained\",\"strikethrough\":false},\"action\":\"show_text\"},\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/socialoptions imclickertrained\"},\"strikethrough\":false},{\"text\":\": tereis :(\",\"obfuscated\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"color\":\"#FFFFFF\",\"bold\":false}],\"strikethrough\":false}",
+      "{\"text\":\"\",\"extra\":[{\"text\":\"§b[MVP§0+§b] imclickertrained§f\",\"hoverEvent\":{\"contents\":{\"text\":\"§eClick to show social options for §bimclickertrained\",\"strikethrough\":false},\"action\":\"show_text\"},\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/socialoptions imclickertrained\"},\"strikethrough\":false},{\"text\":\": gbgb\",\"obfuscated\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"color\":\"#FFFFFF\",\"bold\":false}],\"strikethrough\":false}",
+      "{\"text\":\"\",\"extra\":[{\"text\":\"$ \",\"strikethrough\":false,\"obfuscated\":false,\"bold\":false,\"italic\":false,\"underlined\":false,\"color\":\"#FFFF55\"},{\"text\":\"Master \",\"strikethrough\":false,\"obfuscated\":false,\"bold\":false,\"italic\":false,\"underlined\":false,\"color\":\"#FFAA00\"},{\"text\":\"§6[MVP§e++§6] Nescafe755§f\",\"hover_event\":{\"value\":{\"text\":\"§eClick to show social options for §6Nescafe755\",\"strikethrough\":false},\"action\":\"show_text\"},\"strikethrough\":false,\"click_event\":{\"command\":\"/socialoptions Nescafe755\",\"action\":\"run_command\"}},{\"text\":\": palm tree\",\"strikethrough\":false,\"obfuscated\":false,\"bold\":false,\"italic\":false,\"underlined\":false,\"color\":\"#FFFFFF\"}],\"strikethrough\":false}"
+    ]
+  },
+  {
+    "chatMessages":
+    [
+      "{\"text\":\"-----------------------------------------------------\",\"strikethrough\":true,\"color\":\"aqua\"}",
+      "{\"text\":\"                             Happy Little Trees\",\"color\":\"white\"}",
+      "{\"text\":\"                                 \",\"extra\":[{\"text\":\"[MVP\",\"color\":\"aqua\"},{\"text\":\"++\",\"color\":\"yellow\"},{\"text\":\"] Yria\",\"color\":\"aqua\"}],\"color\":\"white\"}",
+      "{\"text\":\"\",\"color\":\"white\"}",
+      "{\"text\":\"Rank: \",\"extra\":[{\"text\":\"Master Painter\",\"color\":\"yellow\"}],\"color\":\"aqua\"}",
+      "{\"text\":\"Joined: \",\"extra\":[{\"text\":\"2025-06-06 10:07 EDT\",\"color\":\"yellow\"}],\"color\":\"aqua\"}",
+      "{\"text\":\"Guild Exp Contributions:\",\"color\":\"aqua\"}",
+      "{\"text\":\"    \",\"extra\":[{\"text\":\"Today:           \",\"color\":\"yellow\"},{\"text\":\"0 Guild Experience\",\"color\":\"dark_green\"}],\"color\":\"white\"}",
+      "{\"text\":\"    \",\"extra\":[{\"text\":\"Aug 10 2025:   \",\"color\":\"yellow\"},{\"text\":\"16696 Guild Experience\",\"color\":\"dark_green\"}],\"color\":\"white\"}",
+      "{\"text\":\"    \",\"extra\":[{\"text\":\"Aug 09 2025:   \",\"color\":\"yellow\"},{\"text\":\"44231 Guild Experience\",\"color\":\"dark_green\"}],\"color\":\"white\"}",
+      "{\"text\":\"    \",\"extra\":[{\"text\":\"Aug 08 2025:   \",\"color\":\"yellow\"},{\"text\":\"55190 Guild Experience\",\"color\":\"dark_green\"}],\"color\":\"white\"}",
+      "{\"text\":\"    \",\"extra\":[{\"text\":\"Aug 07 2025:   \",\"color\":\"yellow\"},{\"text\":\"0 Guild Experience\",\"color\":\"dark_green\"}],\"color\":\"white\"}",
+      "{\"text\":\"    \",\"extra\":[{\"text\":\"Aug 06 2025:   \",\"color\":\"yellow\"},{\"text\":\"23894 Guild Experience\",\"color\":\"dark_green\"}],\"color\":\"white\"}",
+      "{\"text\":\"    \",\"extra\":[{\"text\":\"Aug 05 2025:   \",\"color\":\"yellow\"},{\"text\":\"33749 Guild Experience\",\"color\":\"dark_green\"}],\"color\":\"white\"}",
+      "{\"text\":\"-----------------------------------------------------\",\"strikethrough\":true,\"color\":\"aqua\"}"
+    ]
+  }
+]

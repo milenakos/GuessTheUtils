@@ -29,9 +29,18 @@ public class GTBEventsTest {
     }
 
     @Test
+    void testParsePlayerMessage() {
+        events.subscribe(GTBEvents.PlayerChatEvent.class, event -> listener.onEvent(event), listener);
+        TestRunner runner = new TestRunner(new File("src/test/java/resources/tests/events/TestParsePlayerMessage.json"));
+        events.changeState(GTBEvents.GameState.ROUND_BUILD);
+        runner.play(events);
+
+        assert listener.receivedEvents.size() == 6;
+    }
+
+    @Test
     void testGameStartEventSeparateTicks() {
         events.subscribe(GTBEvents.GameStartEvent.class, event -> listener.onEvent(event), listener);
-        System.out.println("Current working directory: " + new File(".").getAbsolutePath());
         TestRunner runner = new TestRunner(new File("src/test/java/resources/tests/events/TestGameStartEventSeparateTicks.json"));
         runner.play(events);
 

@@ -1,6 +1,11 @@
 package com.aembr.guesstheutils;
 
+import com.mojang.serialization.DynamicOps;
+import com.mojang.serialization.JsonOps;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TextCodecs;
 import net.minecraft.text.TextColor;
 import net.minecraft.util.Formatting;
 import org.apache.commons.lang3.NotImplementedException;
@@ -256,7 +261,7 @@ public class GTBEvents {
         }
     }
 
-    private String getPlayerNameFromMessage(String message) {
+    public String getPlayerNameFromMessage(String message) {
         if (!message.contains(": ")) return null;
         String[] nameParts = message.split(": ")[0].split(" ");
         if (message.startsWith("[GUESSER CHAT]")) {
@@ -279,18 +284,8 @@ public class GTBEvents {
             if (Arrays.stream(validRanks).anyMatch(e -> e.equals(nameParts[0]))) {
                 return nameParts[nameParts.length - 1];
             }
-            // if they don't even have a rank, then there should only be one name part - their name
-            // however, we have to manually exclude a few possibilities
-            if (nameParts.length == 1 && !nameParts[0].equals("Builder") && !nameParts[0].equals("Round")) {
-                return nameParts[0];
-            }
         }
         return null;
-    }
-
-    // TODO: implement and use this instead of `getPlayerNameFromMessage`
-    private PlayerChatMessage parsePlayerChatMessage(Text message) {
-        throw new NotImplementedException();
     }
 
     private void onSubtitleSet(Text subtitle) {
