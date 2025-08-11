@@ -1,5 +1,6 @@
 package com.aembr.guesstheutils.mixin.item_hider;
 
+import com.aembr.guesstheutils.GTBEvents;
 import com.aembr.guesstheutils.GuessTheUtils;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemGroups;
@@ -25,12 +26,12 @@ public abstract class ItemGroupsMixin {
     }
 
     @Unique
-    private static boolean isInGtb;
+    private static GTBEvents.GameState state;
 
     @Inject(method = "updateDisplayContext", at = @At("HEAD"), cancellable = true)
     private static void trackLastVersion(FeatureSet enabledFeatures, boolean operatorEnabled, RegistryWrapper.WrapperLookup lookup, CallbackInfoReturnable<Boolean> cir) {
-        if (GuessTheUtils.events.isInGtb() != isInGtb) {
-            isInGtb = GuessTheUtils.events.isInGtb();
+        if (GuessTheUtils.events.gameState != state) {
+            state = GuessTheUtils.events.gameState;
             displayContext = new ItemGroup.DisplayContext(enabledFeatures, operatorEnabled, lookup);
             updateEntries(displayContext);
             cir.setReturnValue(true);
