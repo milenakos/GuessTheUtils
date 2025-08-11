@@ -5,6 +5,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.text.ClickEvent;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -60,7 +63,14 @@ public class Replay {
             throw new RuntimeException(e);
         }
 
-        Utils.sendMessage("Replay " + filename + " saved.");
+        //? if >=1.21.5 {
+        ClickEvent clickEvent = new ClickEvent.RunCommand("/guesstheutils replay open");
+        //?} else {
+        /*ClickEvent clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/guesstheutils replay open");
+        *///?}
+
+        Utils.sendMessage(Text.literal("Replay " + filename + " saved. ")
+                .append(Text.literal("[Open folder]").setStyle(Style.EMPTY.withClickEvent(clickEvent))));
     }
 
     public static List<JsonObject> load(File filePath) {
