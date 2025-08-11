@@ -93,7 +93,7 @@ public class GameTracker extends GTBEvents.Module {
     private void onGameStart(GTBEvents.GameStartEvent event) {
         Set<Player> players = new HashSet<>();
         event.players().forEach(p ->
-                players.add(new Player(p.name(), p.rankColor(), p.title(), p.emblem(), p.isUser())));
+                players.add(new Player(p.name, p.rankColor, p.title, p.emblem, p.isUser)));
         game = new Game(this, players);
     }
 

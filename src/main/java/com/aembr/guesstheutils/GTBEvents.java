@@ -179,11 +179,11 @@ public class GTBEvents {
 
     @SuppressWarnings("SequencedCollectionMethodCanBeUsed")
     private void onGameStart(List<Text> lobbyList, List<Text> setupList, List<Text> finalList) {
-//        System.out.println("lobby list: " + lobbyList);
-//        System.out.println("setup list: " + setupList);
-//        System.out.println("final list: " + finalList);
+        System.out.println("lobby list: " + lobbyList);
+        System.out.println("setup list: " + setupList);
+        System.out.println("final list: " + finalList);
 
-        Set<InitialPlayerData> players = new HashSet<>();
+        List<InitialPlayerData> players = new ArrayList<InitialPlayerData>();
         for (Text playerEntry : finalList) {
             String name = playerEntry.getSiblings().isEmpty() ?
                     playerEntry.getString() : playerEntry.getSiblings().get(1).getLiteralString();
@@ -204,25 +204,41 @@ public class GTBEvents {
                 }
             }
 
-            Text lobbyEntry = lobbyList.stream().filter(
-                    entry -> Objects.equals(Formatting.strip(entry.getString()), name)).findFirst().orElse(null);
-            assert lobbyEntry != null : name + "'s lobbyEntry is null!";
-            TextColor styleColor = lobbyEntry.getStyle().getColor();
+            players.add(new InitialPlayerData(name, title, emblem, null, false));
+        }
+
+        for (Text playerEntry : lobbyList) {
+            String name = Formatting.strip(playerEntry.getString());
+            TextColor styleColor = playerEntry.getStyle().getColor();
             if (styleColor == null) {
                 continue;
             }
             Formatting rankColor = Formatting.byName(styleColor.getName());
 
-            Text setupEntry = setupList.stream().filter(
-                    entry -> Objects.equals(Formatting.strip(entry.getString()), name)).findFirst().orElse(null);
 
-            boolean isUser = setupEntry != null && !setupEntry.getStyle().isEmpty();
+            InitialPlayerData player = players.stream().filter(p -> p.name.equals(name)).findAny().orElse(null);
+            if (player == null) {
+                players.add(new InitialPlayerData(name, null, null, rankColor, false));
+            } else {
+                player.rankColor = rankColor;
+            }
+        }
 
-            players.add(new InitialPlayerData(name, title, emblem, rankColor, isUser));
+        Text setupEntry = setupList.stream().filter(
+                entry -> !entry.getStyle().isEmpty()).findFirst().orElse(null);
+
+        if (setupEntry != null) {
+            String name = Formatting.strip(setupEntry.getString());
+            InitialPlayerData player = players.stream().filter(p -> p.name.equals(name)).findAny().orElse(null);
+            if (player == null) {
+                players.add(new InitialPlayerData(name, null, null, null, true));
+            } else {
+                player.isUser = true;
+            }
         }
 
         currentBuilder = null;
-        emit(new GameStartEvent(players));
+        emit(new GameStartEvent(new HashSet<>(players)));
 
         lobbyPlayerList = new ArrayList<>();
         setupPlayerList = new ArrayList<>();
@@ -233,6 +249,7 @@ public class GTBEvents {
             prematureBuilder = null;
         }
     }
+
 
     private void onGameEnd(List<Text> scoreboardLines) {
         Map<String, Integer> actualScores = new HashMap<>();
@@ -582,24 +599,41 @@ public class GTBEvents {
         }
     }
 
-    public record InitialPlayerData(String name, Text title, Text emblem, Formatting rankColor, boolean isUser) {
+    public static class InitialPlayerData {
+        public final String name;
+        public final Text title;
+        public final Text emblem;
+        public Formatting rankColor;
+        public boolean isUser;
+
+        public InitialPlayerData(String name, Text title, Text emblem, Formatting rankColor, boolean isUser) {
+            this.name = name;
+            this.title = title;
+            this.emblem = emblem;
+            this.rankColor = rankColor;
+            this.isUser = isUser;
+        }
+
+        @Override
+        public String toString() {
+            return "InitialPlayerData{" +
+                    "name='" + name + '\'' +
+                    ", title=" + title +
+                    ", emblem=" + emblem +
+                    ", rankColor=" + rankColor +
+                    ", isUser=" + isUser +
+                    '}';
+        }
+
         @Override
         public boolean equals(Object o) {
-            if (o == null || getClass() != o.getClass()) return false;
-            InitialPlayerData that = (InitialPlayerData) o;
-            return isUser == that.isUser && Objects.equals(title, that.title) && Objects.equals(name, that.name)
-                    && Objects.equals(emblem, that.emblem) && rankColor == that.rankColor;
+            if (!(o instanceof InitialPlayerData that)) return false;
+            return isUser == that.isUser && Objects.equals(name, that.name) && Objects.equals(title, that.title) && Objects.equals(emblem, that.emblem) && rankColor == that.rankColor;
         }
 
         @Override
         public int hashCode() {
             return Objects.hash(name, title, emblem, rankColor, isUser);
-        }
-
-        @Override
-        public @NotNull String toString() {
-            return "InitialPlayerData{" + "name='" + name + '\'' + ", title=" + title + ", emblem=" + emblem +
-                    ", rankColor=" + rankColor + ", isUser=" + isUser + '}';
         }
     }
 

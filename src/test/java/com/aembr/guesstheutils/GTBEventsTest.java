@@ -125,6 +125,30 @@ public class GTBEventsTest {
     }
 
     @Test
+    void testGameStartEventIncompleteFinal() {
+        events.subscribe(GTBEvents.GameStartEvent.class, event -> listener.onEvent(event), listener);
+        TestRunner runner = new TestRunner(new File("src/test/java/resources/tests/events/TestIncompleteFinalSetupList.json"));
+        runner.play(events);
+
+        assert listener.receivedEvents.size() == 1;
+        GTBEvents.BaseEvent event = listener.receivedEvents.get(0);
+        assert event instanceof GTBEvents.GameStartEvent;
+
+        Set<GTBEvents.InitialPlayerData> expected = new HashSet<>(List.of(
+                new GTBEvents.InitialPlayerData("Nescafe755", Text.literal("Master").formatted(Formatting.GOLD), Text.literal("$").formatted(Formatting.YELLOW), Formatting.GOLD, false),
+                new GTBEvents.InitialPlayerData("Yria", Text.literal("Master").formatted(Formatting.GOLD), Text.literal("≈").formatted(Formatting.YELLOW), Formatting.GOLD, true),
+                new GTBEvents.InitialPlayerData("xShadow231x", Text.literal("Untrained").formatted(Formatting.GRAY), Text.empty(), Formatting.GRAY, false),
+                new GTBEvents.InitialPlayerData("BELbimba", Text.literal("Experienced").formatted(Formatting.AQUA), Text.empty(), Formatting.GRAY, false),
+                new GTBEvents.InitialPlayerData("fitzlander", null, null, Formatting.GRAY, false),
+                new GTBEvents.InitialPlayerData("NatpDak", null, null, Formatting.AQUA, false),
+                new GTBEvents.InitialPlayerData("glenda89", null, null, Formatting.GRAY, false),
+                new GTBEvents.InitialPlayerData("Gyroburg", null, null, Formatting.AQUA, false)
+        ));
+        Set<GTBEvents.InitialPlayerData> actual = ((GTBEvents.GameStartEvent) event).players();
+        assert actual.equals(expected) : "Expected:\n" + expected + "\nActual:\n" + actual;
+    }
+
+    @Test
     void testGameStartEventIncomplete() {
         events.subscribe(GTBEvents.GameStartEvent.class, event -> listener.onEvent(event), listener);
         TestRunner runner = new TestRunner(new File("src/test/java/resources/tests/events/TestGameStartEventIncomplete.json"));

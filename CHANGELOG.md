@@ -17,6 +17,7 @@
 ## Bug Fixes
 - Fixed a bug where certain lines from `/g member <name>` would be considered as player messages, resulting in the tracker becoming very confused (thanks @potato1075)
 - Fixed disallowed item hider from being active outside of GTB (thanks @potato1075)
+- Fixed rare cases of tracker crashing after receiving incomplete data from the server at the start of the game
 
 ## Improvements
 - Added an easy way to open replays folder by clicking on the replay saved message, or executing `/guesstheutils replay open`
