@@ -40,6 +40,8 @@
   "yacl3.config.enum.BuilderOffsetType.shift": "Shift",
 
   "yacl3.config.guesstheutils:config.enableShortcutReminderModule": "Enable Shortcut Reminders",
+  "yacl3.config.guesstheutils:config.shortcutReminderIncludeLatinOnlyShortcuts": "Latin Letters Only",
+  "yacl3.config.guesstheutils:config.shortcutReminderIncludeLatinOnlyShortcuts.desc": "Only show shortcuts that can be typed with a Latin keyboard, removing accents and special characters.",
 
   "yacl3.config.guesstheutils:config.enableChatCooldownModule": "Enable Chat Cooldown Tracking",
   "yacl3.config.guesstheutils:config.chatCooldownPingVolume": "Ping Volume",

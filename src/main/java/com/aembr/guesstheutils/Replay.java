@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import net.fabricmc.loader.api.FabricLoader;
+import dev.isxander.yacl3.platform.YACLPlatform;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -17,8 +17,8 @@ import java.util.*;
 import java.util.zip.GZIPOutputStream;
 
 public class Replay {
-    public static final Path GAME_DIR = FabricLoader.getInstance().getGameDir();
-    public static final String REPLAYS_DIR_NAME = "guesstheutils-replays";
+    public static final Path GAME_DIR = YACLPlatform.getConfigDir();
+    public static final String REPLAYS_DIR_NAME = "guesstheutils/replays";
 
     public static Path replayDir;
     public static TickBuffer tickBuffer = new TickBuffer(3000);

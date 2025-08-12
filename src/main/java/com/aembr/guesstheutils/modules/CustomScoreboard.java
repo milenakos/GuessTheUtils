@@ -84,7 +84,8 @@ public class CustomScoreboard /*? >=1.21.6 {*/ implements HudElement /*?}*/ {
     }
 
     public static boolean isRendering() {
-        return tracker != null && tracker.game != null && GuessTheUtils.events.isInGtb()
+        return tracker != null && tracker.game != null && events != null
+                && GuessTheUtils.events.isInGtb()
                 && GuessTheUtilsConfig.CONFIG.instance().enableCustomScoreboardModule;
     }
 

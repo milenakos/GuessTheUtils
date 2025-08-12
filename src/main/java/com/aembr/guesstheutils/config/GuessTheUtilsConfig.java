@@ -15,13 +15,15 @@ import org.jetbrains.annotations.Nullable;
 import java.nio.file.Path;
 
 public class GuessTheUtilsConfig {
-    public static final Path CONFIG_PATH = YACLPlatform.getConfigDir().resolve("guesstheutils.json");
+    public static final Path CONFIG_PATH = YACLPlatform.getConfigDir().resolve(
+            "guesstheutils/");
+    public static final String CONFIG_FILENAME = "config.json";
 
     public static final ConfigClassHandler<GuessTheUtilsConfig> CONFIG = ConfigClassHandler
             .createBuilder(GuessTheUtilsConfig.class)
             .id(Identifier.of(GuessTheUtils.MOD_ID, "config"))
             .serializer(config -> GsonConfigSerializerBuilder.create(config)
-                    .setPath(CONFIG_PATH)
+                    .setPath(CONFIG_PATH.resolve(CONFIG_FILENAME))
                     .build())
             .build();
 
@@ -106,6 +108,11 @@ public class GuessTheUtilsConfig {
     @AutoGen(category = "modules", group = "shortcut_reminder")
     @TickBox
     public boolean enableShortcutReminderModule = true;
+
+    @SerialEntry
+    @AutoGen(category = "modules", group = "shortcut_reminder")
+    @TickBox
+    public boolean shortcutReminderIncludeLatinOnlyShortcuts = false;
 
     // CHAT COOLDOWN
 
