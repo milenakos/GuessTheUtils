@@ -51,9 +51,6 @@ dependencies {
 	modImplementation("dev.isxander:yet-another-config-lib:${property("deps.yacl")}")
 	modImplementation("com.terraformersmc:modmenu:${property("deps.modmenu")}")
 
-	implementation("org.yaml:snakeyaml:2.4")
-	include("org.yaml:snakeyaml:2.4")
-
 	fapi("fabric-lifecycle-events-v1",)
 }
 
