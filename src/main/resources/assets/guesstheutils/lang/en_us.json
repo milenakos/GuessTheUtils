@@ -25,10 +25,17 @@
   "yacl3.config.guesstheutils:config.customScoreboardLineSpacing.desc": "Space between each line.",
   "yacl3.config.guesstheutils:config.customScoreboardSeparatorHeight": "Separator Height",
   "yacl3.config.guesstheutils:config.customScoreboardDrawSeparatorBackground": "Draw Separator Background",
+  "yacl3.config.guesstheutils:config.customScoreboardBuilderOffset": "Builder Offset",
+  "yacl3.config.guesstheutils:config.customScoreboardBuilderOffsetType": "Builder Offset Type",
+  "yacl3.config.guesstheutils:config.customScoreboardBuilderOffsetType.desc": "Whether builder offset should shift the whole line or increase width to the left.\n\nPick \"Offset\" if you want everyone's points to line up on the right side.\n\nPick \"Shift\" to move the line to the left, without adjusting the width.",
+
 
   "yacl3.config.enum.CustomScoreboardOption.on": "Yes",
   "yacl3.config.enum.CustomScoreboardOption.expanded": "Only When Expanded",
   "yacl3.config.enum.CustomScoreboardOption.off": "No",
+
+  "yacl3.config.enum.BuilderOffsetType.offset": "Offset",
+  "yacl3.config.enum.BuilderOffsetType.shift": "Shift",
 
   "yacl3.config.guesstheutils:config.enableShortcutReminderModule": "Enable Shortcut Reminders",
 

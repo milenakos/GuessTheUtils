@@ -22,3 +22,4 @@
 ## Improvements
 - Added an easy way to open replays folder by clicking on the replay saved message, or executing `/guesstheutils replay open`
 - Changed theme length display to individual word lengths
+- Added a configurable offset for current builder's scoreboard line for improved visibility

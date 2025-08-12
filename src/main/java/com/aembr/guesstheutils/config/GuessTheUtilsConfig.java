@@ -28,6 +28,7 @@ public class GuessTheUtilsConfig {
     // CUSTOM SCOREBOARD
 
     public enum CustomScoreboardOption { ON, EXPANDED, OFF }
+    public enum BuilderOffsetType { OFFSET, SHIFT }
 
     @SerialEntry
     @AutoGen(category = "modules", group = "custom_scoreboard")
@@ -78,6 +79,16 @@ public class GuessTheUtilsConfig {
     @AutoGen(category = "modules", group = "custom_scoreboard")
     @TickBox
     public boolean customScoreboardDrawSeparatorBackground = true;
+
+    @SerialEntry
+    @AutoGen(category = "modules", group = "custom_scoreboard")
+    @IntSlider(min = 0, max = 20, step = 1)
+    public int customScoreboardBuilderOffset = 6;
+
+    @SerialEntry
+    @AutoGen(category = "modules", group = "custom_scoreboard")
+    @EnumCycler
+    public BuilderOffsetType customScoreboardBuilderOffsetType = BuilderOffsetType.SHIFT;
 
     // SHORTCUT REMINDER
 

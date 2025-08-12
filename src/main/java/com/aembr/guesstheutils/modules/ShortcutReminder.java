@@ -19,13 +19,11 @@ import java.util.Map;
 
 public class ShortcutReminder extends GTBEvents.Module {
     public static final String SHORTCUTS_FILENAME = "guesstheutils-shortcuts.yml";
-    private Map<String, List<String>> shortcuts = new HashMap<>();
-
     String currentTheme = "";
     List<Map.Entry<String, List<String>>> currentShortcuts = new ArrayList<>();
-
     Formatting shortcutColor = Formatting.GOLD;
     Formatting themeColor = Formatting.GREEN;
+    private Map<String, List<String>> shortcuts = new HashMap<>();
 
 
     public ShortcutReminder(GTBEvents events) {

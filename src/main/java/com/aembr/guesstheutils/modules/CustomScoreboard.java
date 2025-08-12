@@ -68,14 +68,11 @@ public class CustomScoreboard /*? >=1.21.6 {*/ implements HudElement /*?}*/ {
     public static int heightOffset = 20;
     public static int playerNameRightPad = 4;
 
+    public static int builderOffset = 8;
+
     static GameTracker tracker;
     //? if >=1.21.6
     Identifier identifier = Identifier.of("guess_the_utils_scoreboard");
-
-    public static boolean isRendering() {
-        return tracker != null && tracker.game != null && GuessTheUtils.events.isInGtb()
-                && GuessTheUtilsConfig.CONFIG.instance().enableCustomScoreboardModule;
-    }
 
     public CustomScoreboard(GameTracker tracker) {
         CustomScoreboard.tracker = tracker;
@@ -86,6 +83,11 @@ public class CustomScoreboard /*? >=1.21.6 {*/ implements HudElement /*?}*/ {
             HudElementRegistry.replaceElement(identifier, hudElement -> this);
         }
         //?}
+    }
+
+    public static boolean isRendering() {
+        return tracker != null && tracker.game != null && GuessTheUtils.events.isInGtb()
+                && GuessTheUtilsConfig.CONFIG.instance().enableCustomScoreboardModule;
     }
 
     public static String getLengthAsString(String input) {
@@ -104,6 +106,248 @@ public class CustomScoreboard /*? >=1.21.6 {*/ implements HudElement /*?}*/ {
     public static String getSpinnerFrame(String[] frames, int ticksPerFrame, int tickCounter) {
         int index = (tickCounter / ticksPerFrame) % frames.length;
         return frames[frames.length - 1 - index]; // uhh it's reversed lol
+    }
+
+    private static void drawTextRightAligned(DrawContext context, TextRenderer renderer, String string, int x, int y,
+                                             int color, boolean shadow) {
+        context.drawText(renderer, string, x - renderer.getWidth(string), y, color, shadow);
+    }
+
+    private static void drawTextRightAligned(DrawContext context, TextRenderer renderer, Text text, int x, int y,
+                                             int color, boolean shadow) {
+        context.drawText(renderer, text, x - renderer.getWidth(text), y, color, shadow);
+    }
+
+    @SuppressWarnings({"unused", "SameParameterValue", "DuplicateExpressions"})
+    private static int drawLine(DrawContext context, TextRenderer renderer, ScoreboardLine line, int x, int y,
+                                int width, int linePadding, boolean includeTitles, boolean includeEmblems,
+                                boolean includeRoundPoints, int lineItemSpacing, int lineSpacing, int backgroundColor,
+                                int textColor, Formatting textColorFormatting, int textColorInactive, int textColorPointsThisRound,
+                                Formatting accentColor, Formatting accentColorBuilder, int backgroundHighlightColor,
+                                int backgroundHighlightColorBuilder, Formatting notBuiltIconColor,
+                                float notBuildIconOpacity, Formatting inactiveIconColor, Formatting leaverIconColor,
+                                Formatting pointsThisRoundColor1, Formatting pointsThisRoundColor2,
+                                Formatting pointsThisRoundColor3, Formatting pointsColor,
+                                Formatting pointsColorHighlight, GameTracker.Game game, int playerPlace, boolean shadow,
+                                boolean drawSeparatorBg, boolean includePlaces) {
+
+        if (line instanceof SeparatorLine) {
+            if (drawSeparatorBg) {
+                context.fill(x, y, x + width, y + ((SeparatorLine) line).height - 2 + linePadding * 2, backgroundColor);
+            }
+            return ((SeparatorLine) line).height;
+        }
+
+        int itemX = x + linePadding;
+        int itemY = y + linePadding;
+
+        if (line instanceof PlayerLine) {
+            int builderOffset = GuessTheUtilsConfig.CONFIG.instance().customScoreboardBuilderOffset;
+            GuessTheUtilsConfig.BuilderOffsetType builderOffsetType =
+                    GuessTheUtilsConfig.CONFIG.instance().customScoreboardBuilderOffsetType;
+
+            GameTracker.Player player = ((PlayerLine) line).player;
+
+            boolean isBuilder = Objects.equals(game.currentBuilder, player);
+            boolean isBuildingThisRound = player.buildRound == game.currentRound;
+            boolean isRoundPre = GameTracker.state.equals(GTBEvents.GameState.ROUND_PRE);
+            int pointsThisRound = isRoundPre ? 0 : player.points[game.currentRound - 1];
+
+            int fgColor = (!player.leaverState.equals(GameTracker.Player.LeaverState.NORMAL)
+                    || player.inactiveTicks > INACTIVE_PLAYER_THRESHOLD_SECONDS * 20) ? textColorInactive : textColor;
+            int bottom = y + renderer.fontHeight - 2 + linePadding * 2;
+
+            if (isBuilder) {
+                x -= builderOffset;
+                itemX = x + linePadding;
+                if (builderOffsetType.equals(GuessTheUtilsConfig.BuilderOffsetType.OFFSET)) {
+                    width += builderOffset;
+                }
+            }
+
+            context.fill(x, y, x + width, y + renderer.fontHeight - 2 + linePadding * 2, backgroundColor);
+
+            // Highlight
+            int highlightColor = isBuilder ? backgroundHighlightColorBuilder : backgroundHighlightColor;
+            if (pointsThisRound > 0 || isBuilder) {
+                context.fill(x, y, x + width, bottom, highlightColor);
+            }
+
+            // Build Icon BG
+            Text builderIconBg = Text.literal(BUILD_BG_ICON).formatted(notBuiltIconColor);
+            drawTextRightAligned(context, renderer, builderIconBg, itemX - linePadding - lineItemSpacing, itemY, rgbToArgb(textColor, notBuildIconOpacity), shadow);
+
+            // Build Icon Check or Spinner
+            if (player.buildRound != 0) {
+                Text builderIconFg = Text.literal(BUILD_CHECK_ICON).formatted(accentColorBuilder);
+                if (isBuildingThisRound && GameTracker.state.equals(GTBEvents.GameState.ROUND_BUILD)) {
+                    builderIconFg = Text.literal(getSpinnerFrame(BUILDING_SPINNER, 1, tickCounter))
+                            .formatted(accentColorBuilder);
+                }
+                context.drawText(renderer, builderIconFg, itemX - linePadding - lineItemSpacing - renderer.getWidth(builderIconBg), itemY, textColor, shadow);
+            }
+
+            // Places
+            if (includePlaces) {
+                int placeWidth = game.players.size() == 10 ? renderer.getWidth("00") : renderer.getWidth("0");
+                Text place = Text.literal(String.valueOf(playerPlace)).formatted(textColorFormatting);
+                drawTextRightAligned(context, renderer, place, itemX + placeWidth, itemY, fgColor, shadow);
+                itemX += placeWidth + lineItemSpacing;
+            }
+
+            // Leaver Badge
+            Text badge = Text.empty();
+            if (!player.leaverState.equals(GameTracker.Player.LeaverState.NORMAL)) {
+                badge = Text.literal(LEAVER_ICON).formatted(leaverIconColor);
+            } else if (player.inactiveTicks > INACTIVE_PLAYER_THRESHOLD_SECONDS * 20) {
+                badge = Text.literal(INACTIVE_ICON).formatted(inactiveIconColor);
+            }
+            if (!badge.getString().isEmpty()) {
+                context.drawText(renderer, badge, itemX, itemY, textColor, shadow);
+                itemX += renderer.getWidth(badge) + lineItemSpacing;
+            }
+
+            // Name
+            Formatting rankColor = player.rank == null ? Formatting.GRAY : player.rank;
+            MutableText name = Text.literal(player.name).formatted(rankColor);
+
+            if (includeEmblems && player.emblem != null && !player.emblem.getString().isEmpty()) {
+                name.append(Text.literal(" ")).append(player.emblem);
+            }
+
+            if (includeTitles && player.title != null) {
+                MutableText title = player.title.copy();
+                name = title.append(Text.literal(" ")).append(name);
+            }
+
+            context.drawText(renderer, name, itemX, itemY, fgColor, shadow);
+
+            // Points
+            itemX = x + width - linePadding;
+            MutableText points = Text.literal(String.valueOf(player.getTotalPoints()));
+            if (!isRoundPre && pointsThisRound > 0) {
+                if (isBuildingThisRound) points.formatted(accentColorBuilder);
+                else points.formatted(pointsColorHighlight);
+            } else points.formatted(pointsColor);
+
+            int pointsWidth = (player.getTotalPoints() < 10 ? renderer.getWidth("0") : renderer.getWidth("00")) + 1;
+
+            drawTextRightAligned(context, renderer, points, itemX, itemY, fgColor, shadow);
+
+            // Points this round
+            if (!isRoundPre && pointsThisRound > 0 && includeRoundPoints) {
+                itemX -= pointsWidth + lineItemSpacing;
+                MutableText pointsThisRoundIcon = Text.literal(POINTS_ICONS[pointsThisRound - 1]);
+                Formatting pointsThisRoundColor;
+                if (isBuildingThisRound) pointsThisRoundIcon.formatted(accentColorBuilder);
+                else {
+                    switch (pointsThisRound) {
+                        case 3: pointsThisRoundIcon.formatted(pointsThisRoundColor3);
+                        case 2: pointsThisRoundIcon.formatted(pointsThisRoundColor2);
+                        case 1: pointsThisRoundIcon.formatted(pointsThisRoundColor1);
+                    }
+                }
+                drawTextRightAligned(context, renderer, pointsThisRoundIcon, itemX, itemY, textColorPointsThisRound, shadow);
+            }
+
+        }
+
+        if (line instanceof TextLine) {
+            context.fill(x, y, x + width, y + renderer.fontHeight - 2 + linePadding * 2, backgroundColor);
+
+            for (Text item : ((TextLine) line).left()) {
+                context.drawText(renderer, item, itemX, itemY, textColor, shadow);
+                itemX += renderer.getWidth(item) + lineItemSpacing;
+            }
+
+            AtomicInteger centerItemsWidth = new AtomicInteger();
+            ((TextLine) line).center().forEach(i -> centerItemsWidth.addAndGet(renderer.getWidth(i)));
+            centerItemsWidth.addAndGet((((TextLine) line).center().size() - 1) * lineItemSpacing);
+
+            itemX = x + width / 2 - centerItemsWidth.get() / 2;
+
+            for (Text item : ((TextLine) line).center()) {
+                context.drawText(renderer, item, itemX, itemY, textColor, shadow);
+                itemX += renderer.getWidth(item) + lineItemSpacing;
+            }
+
+            itemX = x + width - linePadding;
+
+            for (Text item : ((TextLine) line).right()) {
+                drawTextRightAligned(context, renderer, item, itemX, itemY, textColor, shadow);
+                itemX -= renderer.getWidth(item) + lineItemSpacing;
+            }
+        }
+        return renderer.fontHeight - 2 + linePadding * 2 + lineSpacing;
+    }
+
+    private static int getTotalWidth(TextRenderer renderer, List<ScoreboardLine> lines, int linePadding,
+                                     boolean includeTitles, boolean includeEmblems, boolean includePointsGainedInRound,
+                                     int lineItemSpacing, int playerNameRightPad, boolean includePlaces, GameTracker.Game game) {
+        int width = 0;
+        for (ScoreboardLine line : lines) {
+            if (line instanceof SeparatorLine) continue;
+            if (line instanceof PlayerLine) {
+                GameTracker.Player player = ((PlayerLine) line).player;
+
+                int placeWidth = 0;
+                if (includePlaces) {
+                    placeWidth = (game.players.size() == 10 ? renderer.getWidth("00")
+                            : renderer.getWidth("0")) + lineItemSpacing;
+                }
+
+                int leaverBadgeWidth = player.leaverState.equals(GameTracker.Player.LeaverState.NORMAL) ? 0
+                        : renderer.getWidth(LEAVER_ICON) + lineItemSpacing;
+
+                int nameWidth = renderer.getWidth(player.name) + playerNameRightPad + lineItemSpacing;
+
+                if (includeEmblems && player.emblem != null && !player.emblem.getString().isEmpty()) {
+                    nameWidth += renderer.getWidth(Text.literal(" ").append(player.emblem));
+                }
+
+                if (includeTitles && player.title != null) {
+                    nameWidth += renderer.getWidth(Text.literal(" ").append(player.title));
+                }
+
+                int pointsThisRoundWidth;
+                if (includePointsGainedInRound) {
+                    pointsThisRoundWidth = renderer.getWidth("+3") + lineItemSpacing;
+                } else {
+                    pointsThisRoundWidth = 0;
+                }
+
+                int pointsWidth = player.getTotalPoints() >= 10 ? renderer.getWidth("00") : renderer.getWidth("0");
+
+                int totalWidth = linePadding * 2 + placeWidth + leaverBadgeWidth + nameWidth + pointsThisRoundWidth + pointsWidth;
+
+                if (totalWidth > width) width = totalWidth;
+            }
+            if (line instanceof TextLine) {
+                AtomicInteger lineWidth = new AtomicInteger();
+                AtomicInteger items = new AtomicInteger();
+                Stream.of(((TextLine) line).left, ((TextLine) line).center, ((TextLine) line).right)
+                        .flatMap(List::stream).forEach(i -> {
+                            lineWidth.addAndGet(renderer.getWidth(i));
+                            items.addAndGet(1);
+                        });
+                lineWidth.addAndGet(Math.max(0, items.get() - 1) * lineItemSpacing + linePadding * 2);
+                if (lineWidth.get() > width) width = lineWidth.get();
+            }
+        }
+        return width;
+    }
+
+    public static int rgbToArgb(int rgb, float alpha) {
+        if (alpha < 0.0f) alpha = 0.0f;
+        if (alpha > 1.0f) alpha = 1.0f;
+
+        int alphaInt = (int) (alpha * 255);
+
+        int red = (rgb >> 16) & 0xFF;
+        int green = (rgb >> 8) & 0xFF;
+        int blue = rgb & 0xFF;
+
+        return (alphaInt << 24) | (red << 16) | (green << 8) | blue;
     }
 
     @SuppressWarnings({"DataFlowIssue"})
@@ -209,243 +453,17 @@ public class CustomScoreboard /*? >=1.21.6 {*/ implements HudElement /*?}*/ {
 
             int playerPlace = 1;
             for (ScoreboardLine line : lines) {
-                int lineHeight = drawLine(context, renderer, line, x, y, width, linePadding, includeTitles, includeEmblems, includePointsGained,
-                        lineItemSpacing, lineSpacing, bgColor, fgColor, textColor, fgColorInactive, fgColorPointsThisRound,
-                        accentColor, accentColorBuilder, backgroundHighlightColor, backgroundHighlightColorBuilder,
-                        notBuiltIconColor, notBuiltIconOpacity, inactiveIconColor, leaverIconColor, pointsThisRoundColor1, pointsThisRoundColor2,
+                int lineHeight = drawLine(context, renderer, line, x, y, width, linePadding, includeTitles,
+                        includeEmblems, includePointsGained, lineItemSpacing, lineSpacing, bgColor, fgColor, textColor,
+                        fgColorInactive, fgColorPointsThisRound, accentColor, accentColorBuilder,
+                        backgroundHighlightColor, backgroundHighlightColorBuilder, notBuiltIconColor,
+                        notBuiltIconOpacity, inactiveIconColor, leaverIconColor, pointsThisRoundColor1, pointsThisRoundColor2,
                         pointsThisRoundColor3, pointsColor, pointsColorHighlight, tracker.game, playerPlace, shadow, drawSeparatorBg, includePlaces);
                 if (line instanceof PlayerLine) playerPlace++;
                 y += lineHeight;
             }
         } catch (Exception ignored) {
         }
-    }
-
-    private static void drawTextRightAligned(DrawContext context, TextRenderer renderer, String string, int x, int y,
-                                             int color, boolean shadow) {
-        context.drawText(renderer, string, x - renderer.getWidth(string), y, color, shadow);
-    }
-
-    private static void drawTextRightAligned(DrawContext context, TextRenderer renderer, Text text, int x, int y,
-                                             int color, boolean shadow) {
-        context.drawText(renderer, text, x - renderer.getWidth(text), y, color, shadow);
-    }
-
-    @SuppressWarnings({"unused", "SameParameterValue", "DuplicateExpressions"})
-    private static int drawLine(DrawContext context, TextRenderer renderer, ScoreboardLine line, int x, int y,
-                                int width, int linePadding, boolean includeTitles, boolean includeEmblems,
-                                boolean includeRoundPoints, int lineItemSpacing, int lineSpacing, int backgroundColor,
-                                int textColor, Formatting textColorFormatting, int textColorInactive, int textColorPointsThisRound,
-                                Formatting accentColor, Formatting accentColorBuilder, int backgroundHighlightColor,
-                                int backgroundHighlightColorBuilder, Formatting notBuiltIconColor,
-                                float notBuildIconOpacity, Formatting inactiveIconColor, Formatting leaverIconColor,
-                                Formatting pointsThisRoundColor1, Formatting pointsThisRoundColor2,
-                                Formatting pointsThisRoundColor3, Formatting pointsColor,
-                                Formatting pointsColorHighlight, GameTracker.Game game, int playerPlace, boolean shadow,
-                                boolean drawSeparatorBg, boolean includePlaces) {
-
-        if (line instanceof SeparatorLine) {
-            if (drawSeparatorBg) {
-                context.fill(x, y, x + width, y + ((SeparatorLine) line).height - 2 + linePadding * 2, backgroundColor);
-            }
-            return ((SeparatorLine) line).height;
-        }
-
-        context.fill(x, y, x + width, y + renderer.fontHeight - 2 + linePadding * 2, backgroundColor);
-        int itemX = x + linePadding;
-        int itemY = y + linePadding;
-
-        if (line instanceof PlayerLine) {
-            GameTracker.Player player = ((PlayerLine) line).player;
-
-            boolean isBuilder = Objects.equals(game.currentBuilder, player);
-            boolean isBuildingThisRound = player.buildRound == game.currentRound;
-            boolean isRoundPre = GameTracker.state.equals(GTBEvents.GameState.ROUND_PRE);
-            int pointsThisRound = isRoundPre ? 0 : player.points[game.currentRound - 1];
-
-            int fgColor = (!player.leaverState.equals(GameTracker.Player.LeaverState.NORMAL)
-                    || player.inactiveTicks > INACTIVE_PLAYER_THRESHOLD_SECONDS * 20) ? textColorInactive : textColor;
-            int bottom = y + renderer.fontHeight - 2 + linePadding * 2;
-
-            // Highlight
-            int highlightColor = isBuilder ? backgroundHighlightColorBuilder : backgroundHighlightColor;
-            if (pointsThisRound > 0 || isBuilder) {
-                context.fill(x, y, x + width, bottom, highlightColor);
-            }
-
-            // Build Icon BG
-            Text builderIconBg = Text.literal(BUILD_BG_ICON).formatted(notBuiltIconColor);
-            drawTextRightAligned(context, renderer, builderIconBg, itemX - linePadding - lineItemSpacing, itemY, rgbToArgb(textColor, notBuildIconOpacity), shadow);
-
-            // Build Icon Check or Spinner
-            if (player.buildRound != 0) {
-                Text builderIconFg = Text.literal(BUILD_CHECK_ICON).formatted(accentColorBuilder);
-                if (isBuildingThisRound && GameTracker.state.equals(GTBEvents.GameState.ROUND_BUILD)) {
-                    builderIconFg = Text.literal(getSpinnerFrame(BUILDING_SPINNER, 1, tickCounter))
-                            .formatted(accentColorBuilder);
-                }
-                context.drawText(renderer, builderIconFg, itemX - linePadding - lineItemSpacing - renderer.getWidth(builderIconBg), itemY, textColor, shadow);
-            }
-
-            // Places
-            if (includePlaces) {
-                int placeWidth = game.players.size() == 10 ? renderer.getWidth("00") : renderer.getWidth("0");
-                Text place = Text.literal(String.valueOf(playerPlace)).formatted(textColorFormatting);
-                drawTextRightAligned(context, renderer, place, itemX + placeWidth, itemY, fgColor, shadow);
-                itemX += placeWidth + lineItemSpacing;
-            }
-
-            // Leaver Badge
-            Text badge = Text.empty();
-            if (!player.leaverState.equals(GameTracker.Player.LeaverState.NORMAL)) {
-                badge = Text.literal(LEAVER_ICON).formatted(leaverIconColor);
-            } else if (player.inactiveTicks > INACTIVE_PLAYER_THRESHOLD_SECONDS * 20) {
-                badge = Text.literal(INACTIVE_ICON).formatted(inactiveIconColor);
-            }
-            if (!badge.getString().isEmpty()) {
-                context.drawText(renderer, badge, itemX, itemY, textColor, shadow);
-                itemX += renderer.getWidth(badge) + lineItemSpacing;
-            }
-
-            // Name
-            Formatting rankColor = player.rank == null ? Formatting.GRAY : player.rank;
-            MutableText name = Text.literal(player.name).formatted(rankColor);
-
-            if (includeEmblems && player.emblem != null && !player.emblem.getString().isEmpty()) {
-                name.append(Text.literal(" ")).append(player.emblem);
-            }
-
-            if (includeTitles && player.title != null) {
-                MutableText title = player.title.copy();
-                name = title.append(Text.literal(" ")).append(name);
-            }
-
-            context.drawText(renderer, name, itemX, itemY, fgColor, shadow);
-
-            // Points
-            itemX = x + width - linePadding;
-            MutableText points = Text.literal(String.valueOf(player.getTotalPoints()));
-            if (!isRoundPre && pointsThisRound > 0) {
-                if (isBuildingThisRound) points.formatted(accentColorBuilder);
-                else points.formatted(pointsColorHighlight);
-            } else points.formatted(pointsColor);
-
-            int pointsWidth = (player.getTotalPoints() < 10 ? renderer.getWidth("0") : renderer.getWidth("00")) + 1;
-
-            drawTextRightAligned(context, renderer, points, itemX, itemY, fgColor, shadow);
-
-            // Points this round
-            if (!isRoundPre && pointsThisRound > 0 && includeRoundPoints) {
-                itemX -= pointsWidth + lineItemSpacing;
-                MutableText pointsThisRoundIcon = Text.literal(POINTS_ICONS[pointsThisRound - 1]);
-                Formatting pointsThisRoundColor;
-                if (isBuildingThisRound) pointsThisRoundIcon.formatted(accentColorBuilder);
-                else {
-                    switch (pointsThisRound) {
-                        case 3: pointsThisRoundIcon.formatted(pointsThisRoundColor3);
-                        case 2: pointsThisRoundIcon.formatted(pointsThisRoundColor2);
-                        case 1: pointsThisRoundIcon.formatted(pointsThisRoundColor1);
-                    }
-                }
-                drawTextRightAligned(context, renderer, pointsThisRoundIcon, itemX, itemY, textColorPointsThisRound, shadow);
-            }
-
-        }
-
-        if (line instanceof TextLine) {
-            for (Text item : ((TextLine) line).left()) {
-                context.drawText(renderer, item, itemX, itemY, textColor, shadow);
-                itemX += renderer.getWidth(item) + lineItemSpacing;
-            }
-
-            AtomicInteger centerItemsWidth = new AtomicInteger();
-            ((TextLine) line).center().forEach(i -> centerItemsWidth.addAndGet(renderer.getWidth(i)));
-            centerItemsWidth.addAndGet((((TextLine) line).center().size() - 1) * lineItemSpacing);
-
-            itemX = x + width / 2 - centerItemsWidth.get() / 2;
-
-            for (Text item : ((TextLine) line).center()) {
-                context.drawText(renderer, item, itemX, itemY, textColor, shadow);
-                itemX += renderer.getWidth(item) + lineItemSpacing;
-            }
-
-            itemX = x + width - linePadding;
-
-            for (Text item : ((TextLine) line).right()) {
-                drawTextRightAligned(context, renderer, item, itemX, itemY, textColor, shadow);
-                itemX -= renderer.getWidth(item) + lineItemSpacing;
-            }
-        }
-        return renderer.fontHeight - 2 + linePadding * 2 + lineSpacing;
-    }
-
-    private static int getTotalWidth(TextRenderer renderer, List<ScoreboardLine> lines, int linePadding,
-                                     boolean includeTitles, boolean includeEmblems, boolean includePointsGainedInRound,
-                                     int lineItemSpacing, int playerNameRightPad, boolean includePlaces, GameTracker.Game game) {
-        int width = 0;
-        for (ScoreboardLine line : lines) {
-            if (line instanceof SeparatorLine) continue;
-            if (line instanceof PlayerLine) {
-                GameTracker.Player player = ((PlayerLine) line).player;
-
-                int placeWidth = 0;
-                if (includePlaces) {
-                    placeWidth = (game.players.size() == 10 ? renderer.getWidth("00")
-                            : renderer.getWidth("0")) + lineItemSpacing;
-                }
-
-                int leaverBadgeWidth = player.leaverState.equals(GameTracker.Player.LeaverState.NORMAL) ? 0
-                        : renderer.getWidth(LEAVER_ICON) + lineItemSpacing;
-
-                int nameWidth = renderer.getWidth(player.name) + playerNameRightPad + lineItemSpacing;
-
-                if (includeEmblems && player.emblem != null && !player.emblem.getString().isEmpty()) {
-                    nameWidth += renderer.getWidth(Text.literal(" ").append(player.emblem));
-                }
-
-                if (includeTitles && player.title != null) {
-                    nameWidth += renderer.getWidth(Text.literal(" ").append(player.title));
-                }
-
-                int pointsThisRoundWidth;
-                if (includePointsGainedInRound) {
-                    pointsThisRoundWidth = renderer.getWidth("+3") + lineItemSpacing;
-                } else {
-                    pointsThisRoundWidth = 0;
-                }
-
-                int pointsWidth = player.getTotalPoints() >= 10 ? renderer.getWidth("00") : renderer.getWidth("0");
-
-                int totalWidth = linePadding * 2 + placeWidth + leaverBadgeWidth + nameWidth + pointsThisRoundWidth + pointsWidth;
-
-                if (totalWidth > width) width = totalWidth;
-            }
-            if (line instanceof TextLine) {
-                AtomicInteger lineWidth = new AtomicInteger();
-                AtomicInteger items = new AtomicInteger();
-                Stream.of(((TextLine) line).left, ((TextLine) line).center, ((TextLine) line).right)
-                        .flatMap(List::stream).forEach(i -> {
-                            lineWidth.addAndGet(renderer.getWidth(i));
-                            items.addAndGet(1);
-                        });
-                lineWidth.addAndGet(Math.max(0, items.get() - 1) * lineItemSpacing + linePadding * 2);
-                if (lineWidth.get() > width) width = lineWidth.get();
-            }
-        }
-        return width;
-    }
-
-    public static int rgbToArgb(int rgb, float alpha) {
-        if (alpha < 0.0f) alpha = 0.0f;
-        if (alpha > 1.0f) alpha = 1.0f;
-
-        int alphaInt = (int) (alpha * 255);
-
-        int red = (rgb >> 16) & 0xFF;
-        int green = (rgb >> 8) & 0xFF;
-        int blue = rgb & 0xFF;
-
-        return (alphaInt << 24) | (red << 16) | (green << 8) | blue;
     }
 
     public interface ScoreboardLine {}
