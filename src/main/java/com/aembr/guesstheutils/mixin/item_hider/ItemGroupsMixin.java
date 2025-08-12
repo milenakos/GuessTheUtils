@@ -2,6 +2,7 @@ package com.aembr.guesstheutils.mixin.item_hider;
 
 import com.aembr.guesstheutils.GTBEvents;
 import com.aembr.guesstheutils.GuessTheUtils;
+import com.aembr.guesstheutils.config.GuessTheUtilsConfig;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.RegistryWrapper;
@@ -28,10 +29,15 @@ public abstract class ItemGroupsMixin {
     @Unique
     private static GTBEvents.GameState state;
 
+    @Unique
+    private static boolean moduleEnabled;
+
     @Inject(method = "updateDisplayContext", at = @At("HEAD"), cancellable = true)
     private static void trackLastVersion(FeatureSet enabledFeatures, boolean operatorEnabled, RegistryWrapper.WrapperLookup lookup, CallbackInfoReturnable<Boolean> cir) {
-        if (GuessTheUtils.events.gameState != state) {
+        if (GuessTheUtils.events.gameState != state
+                || moduleEnabled != GuessTheUtilsConfig.CONFIG.instance().enableDisallowedItemHiderModule) {
             state = GuessTheUtils.events.gameState;
+            moduleEnabled = GuessTheUtilsConfig.CONFIG.instance().enableDisallowedItemHiderModule;
             displayContext = new ItemGroup.DisplayContext(enabledFeatures, operatorEnabled, lookup);
             updateEntries(displayContext);
             cir.setReturnValue(true);
