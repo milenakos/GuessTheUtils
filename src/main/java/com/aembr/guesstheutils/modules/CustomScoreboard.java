@@ -88,6 +88,19 @@ public class CustomScoreboard /*? >=1.21.6 {*/ implements HudElement /*?}*/ {
         //?}
     }
 
+    public static String getLengthAsString(String input) {
+        String[] words = input.split(" ");
+        StringBuilder lengths = new StringBuilder();
+
+        for (int i = 0; i < words.length; i++) {
+            lengths.append(words[i].length());
+            if (i < words.length - 1) {
+                lengths.append("-");
+            }
+        }
+        return lengths.toString();
+    }
+
     public static String getSpinnerFrame(String[] frames, int ticksPerFrame, int tickCounter) {
         int index = (tickCounter / ticksPerFrame) % frames.length;
         return frames[frames.length - 1 - index]; // uhh it's reversed lol
@@ -162,7 +175,7 @@ public class CustomScoreboard /*? >=1.21.6 {*/ implements HudElement /*?}*/ {
                     List.of(),
                     List.of(tracker.game.currentTheme.isEmpty() ? Text.literal("Theme:").formatted(textColor)
                             : Text.literal("Theme [").formatted(textColor)
-                            .append(Text.literal(String.valueOf(tracker.game.currentTheme.length()))
+                            .append(Text.literal(getLengthAsString(tracker.game.currentTheme))
                                     .formatted(accentColor).append(Text.literal("]:").formatted(textColor)))),
                     List.of()));
 
