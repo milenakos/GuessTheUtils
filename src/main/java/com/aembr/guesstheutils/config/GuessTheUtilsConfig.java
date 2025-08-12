@@ -37,6 +37,16 @@ public class GuessTheUtilsConfig {
 
     @SerialEntry
     @AutoGen(category = "modules", group = "custom_scoreboard")
+    @FloatSlider(min = 0.0f, max = 1.0f, step = 0.01f, format = "%.2f")
+    public float customScoreboardBackgroundOpacity = 0.5f;
+
+    @SerialEntry
+    @AutoGen(category = "modules", group = "custom_scoreboard")
+    @FloatSlider(min = 0.0f, max = 1.0f, step = 0.01f, format = "%.2f")
+    public float customScoreboardHighlightStrength = 0.1f;
+
+    @SerialEntry
+    @AutoGen(category = "modules", group = "custom_scoreboard")
     @EnumCycler
     public CustomScoreboardOption customScoreboardShowPlaces = CustomScoreboardOption.EXPANDED;
 

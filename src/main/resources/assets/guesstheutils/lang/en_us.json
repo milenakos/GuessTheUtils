@@ -9,6 +9,8 @@
   "yacl3.config.guesstheutils:config.category.modules.group.name_autocomplete": "Name Tab Autocomplete",
 
   "yacl3.config.guesstheutils:config.enableCustomScoreboardModule": "Enable Custom Scoreboard",
+  "yacl3.config.guesstheutils:config.customScoreboardBackgroundOpacity": "Background Opacity",
+  "yacl3.config.guesstheutils:config.customScoreboardHighlightStrength": "Highlight Strength",
   "yacl3.config.guesstheutils:config.customScoreboardShowPlaces": "Show Places",
   "yacl3.config.guesstheutils:config.customScoreboardShowPlaces.desc": "Whether to show place numbers before names.\n\nChoosing \"Only When Expanded\" will only show this when holding down the player list key (TAB by default).",
   "yacl3.config.guesstheutils:config.customScoreboardShowTitles": "Show Titles",

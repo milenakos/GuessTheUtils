@@ -39,14 +39,12 @@ public class CustomScoreboard /*? >=1.21.6 {*/ implements HudElement /*?}*/ {
     public static int tickCounter = 0;
 
     public static Formatting backgroundColor = Formatting.BLACK;
-    public static float backgroundOpacity = 0.5f;
     public static Formatting textColor = Formatting.WHITE;
     public static float foregroundOpacity = 1.0f;
     public static float foregroundOpacityInactive = 0.4f;
 
     public static Formatting accentColor = Formatting.GREEN;
     public static Formatting accentColorBuilder = Formatting.AQUA;
-    public static float backgroundHighlightOpacity = 0.1f;
 
     public static Formatting notBuiltIconColor = Formatting.DARK_GRAY;
     public static float notBuiltIconOpacity = 0.5f;
@@ -443,6 +441,9 @@ public class CustomScoreboard /*? >=1.21.6 {*/ implements HudElement /*?}*/ {
 
             int x = context.getScaledWindowWidth() - width;
             int y = context.getScaledWindowHeight() / 2 - height.get() / 2 - heightOffset;
+
+            float backgroundOpacity = GuessTheUtilsConfig.CONFIG.instance().customScoreboardBackgroundOpacity;
+            float backgroundHighlightOpacity = GuessTheUtilsConfig.CONFIG.instance().customScoreboardHighlightStrength;
 
             int bgColor = rgbToArgb(TextColor.fromFormatting(backgroundColor).getRgb(), backgroundOpacity);
             int fgColor = rgbToArgb(0xFFFFFF, foregroundOpacity);
