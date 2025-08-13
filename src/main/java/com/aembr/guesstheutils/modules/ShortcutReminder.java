@@ -6,8 +6,8 @@ import com.aembr.guesstheutils.Utils;
 import com.aembr.guesstheutils.config.GuessTheUtilsConfig;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
+import com.mojang.datafixers.kinds.IdF;
+import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 
 import java.io.*;
@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ShortcutReminder extends GTBEvents.Module {
     private static final String GITHUB_BASE_URL = "https://raw.githubusercontent.com/zmh-program/gtb_platform/refs/heads/main/lib/source/";
@@ -27,11 +28,13 @@ public class ShortcutReminder extends GTBEvents.Module {
 
     private static final Formatting SHORTCUT_COLOR = Formatting.GOLD;
     private static final Formatting THEME_COLOR = Formatting.GREEN;
+    private static final Formatting SHOW_ALL_TEXT_COLOR = Formatting.YELLOW;
 
     private List<TranslationData> translationData;
 
     String currentTheme = "";
     List<ShortcutEntry> currentShortcuts = new ArrayList<>();
+    List<ShortcutEntry> filteredShortcuts = new ArrayList<>();
 
     public ShortcutReminder(GTBEvents events) {
         super(events);
@@ -75,88 +78,135 @@ public class ShortcutReminder extends GTBEvents.Module {
 
         currentTheme = event.theme();
 
-        Optional<TranslationData> result = translationData.stream()
+        Optional<TranslationData> optionalResult = translationData.stream()
                 .filter(data -> data.theme.equals(currentTheme))
                 .findFirst();
 
-        if (result.isEmpty()) return;
+        if (optionalResult.isEmpty()) return;
+        TranslationData res = optionalResult.get();
 
-        Map<List<String>, String> occurrencesMap = new HashMap<>();
+        if (res.shortcut != null) currentShortcuts.add(new ShortcutEntry(res.shortcut, List.of(currentTheme)));
 
-        result.get().multiwords.forEach(multiword -> {
-            List<String> occurrences = multiword.occurrences.stream()
+        res.multiwords.forEach(mw -> {
+            List<String> occurrences = mw.occurrences.stream()
                     .map(Occurrence::theme)
                     .distinct()
-                    .collect(Collectors.toList());
+                    .toList();
 
-            if (GuessTheUtilsConfig.CONFIG.instance().shortcutReminderIncludeLatinOnlyShortcuts
-                    && !isAscii(multiword.multiword)) {
-                return;
-            }
-
-            if (!occurrences.isEmpty()) {
-                occurrencesMap.merge(occurrences, multiword.multiword, (existing, newMultiword) ->
-                        newMultiword.length() < existing.length() ? newMultiword : existing);
-            }
+            currentShortcuts.add(new ShortcutEntry(mw.multiword, occurrences));
         });
 
-        occurrencesMap.forEach((themes, shortcut) ->
-                currentShortcuts.add(new ShortcutEntry(shortcut, themes)));
+        filteredShortcuts = filterShortcuts(new ArrayList<>(currentShortcuts),
+                GuessTheUtilsConfig.CONFIG.instance().shortcutReminderIncludeLatinOnlyShortcuts);
 
-        if (result.get().shortcut != null && isAscii(result.get().shortcut) && currentShortcuts.stream()
-                .noneMatch(sc -> sc.shortcut.equals(result.get().shortcut))) {
-            currentShortcuts.add(new ShortcutEntry(result.get().shortcut, List.of(currentTheme)));
+        if (currentShortcuts.isEmpty()) {
+            Utils.sendMessage(Text.literal("No shortcuts for ")
+                    .append(Text.literal(currentTheme).formatted(THEME_COLOR))
+                    .append(Text.literal(".")));
+            return;
         }
 
-        if (!currentShortcuts.isEmpty()) {
-            currentShortcuts.sort(Comparator.comparingInt(ShortcutEntry::getShortcutLength)
-                    .thenComparing(Comparator.comparingInt(ShortcutEntry::getThemeCount).reversed()));
-            printShortcutReminder(currentShortcuts);
+        MutableText showAllText = Text.empty();
+
+        if (filteredShortcuts.size() != currentShortcuts.size()) {
+            //? if >=1.21.5 {
+            HoverEvent hoverEvent = new HoverEvent.ShowText(compileShortcutsText(currentShortcuts));
+            //?} else {
+            /*HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT,compileShortcutsText(currentShortcuts));
+             *///?}
+
+            showAllText = Text.literal("[Show All]")
+                    .setStyle(Style.EMPTY.withHoverEvent(hoverEvent).withColor(SHOW_ALL_TEXT_COLOR));
+        }
+
+        if (filteredShortcuts.isEmpty()) {
+            Utils.sendMessage(Text.literal("No suitable shortcuts for ")
+                    .append(Text.literal(currentTheme).formatted(THEME_COLOR))
+                    .append(Text.literal(" found. "))
+                    .append(showAllText));
+        } else {
+            Utils.sendMessage(Text.literal("Shortcuts for ")
+                    .append(Text.literal(currentTheme).formatted(THEME_COLOR))
+                    .append(Text.literal(": "))
+                    .append(showAllText)
+                    .append("\n")
+                    .append(compileShortcutsText(filteredShortcuts)));
         }
     }
 
-    private boolean isAscii(String str) {
-        return str.chars().allMatch(c -> c < 128);
+    public static List<ShortcutEntry> filterShortcuts(List<ShortcutEntry> entries, boolean latinOnly) {
+        if (latinOnly) {
+            entries = entries.stream()
+                    .filter(sc -> isAscii(sc.shortcut))
+                    .toList();
+        }
+
+        List<ShortcutEntry> result = new ArrayList<>(entries);
+        for (int i = 0; i < result.size(); i++) {
+            for (int j = 0; j < result.size(); j++) {
+                if (i == j) continue;
+
+                ShortcutEntry current = result.get(i);
+                ShortcutEntry comparison = result.get(j);
+                if (new HashSet<>(comparison.themes).containsAll(current.themes)) {
+                    if (comparison.shortcut.length() <= current.shortcut.length()) {
+                        result.remove(i);
+                        i--;
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
     }
 
-    private void printShortcutReminder(List<ShortcutEntry> shortcuts) {
-        MutableText reminderMessage = Text.empty();
+    private Text compileShortcutsText(List<ShortcutEntry> shortcuts) {
+        shortcuts.sort(Comparator.comparingInt(ShortcutEntry::getShortcutLength)
+                .thenComparing(Comparator.comparingInt(ShortcutEntry::getThemeCount).reversed()));
+
+        MutableText text = Text.empty();
         for (int i = 0; i < shortcuts.size(); i++) {
             ShortcutEntry entry = shortcuts.get(i);
             String shortcut = entry.shortcut;
             List<String> themes = entry.themes;
 
             MutableText shortcutText =
-                    Text.literal(" · ").formatted(Formatting.GRAY)
+                    Text.literal(" • ").formatted(Formatting.GRAY)
                             .append(Text.literal(shortcut)
                                     .formatted(SHORTCUT_COLOR)
                                     .formatted(Formatting.BOLD));
 
-            reminderMessage.append(shortcutText)
-                    .append(Text.literal(": ").formatted(Formatting.GRAY));
+            shortcutText.append(Text.literal(": ").formatted(Formatting.GRAY));
 
             for (int j = 0; j < themes.size(); j++) {
                 MutableText themeText = Text.literal(themes.get(j))
                         .formatted(THEME_COLOR);
 
-                reminderMessage.append(themeText);
+                shortcutText.append(themeText);
 
                 if (j < themes.size() - 1) {
-                    reminderMessage.append(Text.literal(", ").formatted(Formatting.GRAY));
+                    shortcutText.append(Text.literal(" / ").formatted(Formatting.GRAY));
                 }
             }
 
             if (i < shortcuts.size() - 1) {
-                reminderMessage.append(Text.literal("\n"));
+                shortcutText.append(Text.literal("\n"));
             }
+
+            text.append(shortcutText);
         }
-        Utils.sendMessage(Text.literal("Shortcuts for "+ currentTheme + ":\n")
-                .append(reminderMessage));
+
+        return text;
     }
 
     public void reset() {
         currentTheme = "";
         currentShortcuts = new ArrayList<>();
+        filteredShortcuts = new ArrayList<>();
+    }
+
+    private static boolean isAscii(String str) {
+        return str.chars().allMatch(c -> c < 128);
     }
 
     private String readFile(String filename) throws IOException {
@@ -208,11 +258,10 @@ public class ShortcutReminder extends GTBEvents.Module {
         public int getThemeCount() {
                 return themes.size();
             }
-
-            public int getShortcutLength() {
+        public int getShortcutLength() {
                 return shortcut.length();
             }
-        }
+    }
 
     public record TranslationData(
             int id,

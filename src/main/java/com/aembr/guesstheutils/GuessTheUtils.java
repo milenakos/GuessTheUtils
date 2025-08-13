@@ -25,7 +25,7 @@ public class GuessTheUtils implements ClientModInitializer {
     public static final MinecraftClient CLIENT = MinecraftClient.getInstance();
 
     public static final MutableText prefix = Text.literal("[").formatted(Formatting.WHITE)
-            .append(Text.literal("GuessTheUtils").formatted(Formatting.GOLD))
+            .append(Text.literal("GTU").formatted(Formatting.GOLD))
             .append(Text.literal("] ").formatted(Formatting.WHITE));
 
     public static final Replay replay = new Replay();

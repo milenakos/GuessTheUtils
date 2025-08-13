@@ -112,7 +112,7 @@ public class GuessTheUtilsConfig {
     @SerialEntry
     @AutoGen(category = "modules", group = "shortcut_reminder")
     @TickBox
-    public boolean shortcutReminderIncludeLatinOnlyShortcuts = false;
+    public boolean shortcutReminderIncludeLatinOnlyShortcuts = true;
 
     // CHAT COOLDOWN
 
