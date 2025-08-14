@@ -1,3 +1,166 @@
 [
-	
+	{
+        "scoreboardLines":
+        [
+            "\"GUESS THE BUILD\"",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"07/18/25  \",\"color\":\"gray\"},{\"text\":\"m9\",\"color\":\"dark_gray\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0DK\",\"color\":\"dark_gray\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Players: \",\"color\":\"white\"},{\"text\":\"9/10\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Starting in \",\"color\":\"white\"},{\"text\":\"00\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\":02\",\"color\":\"green\"},{\"text\":\" to\",\"color\":\"white\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"allow time for\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"additional playe\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"extra\":[\"rs\"],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Mode: \",\"color\":\"white\"},{\"text\":\"Guess Th\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"e Build\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"www.hypixel.ne\",\"color\":\"yellow\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"t\",\"color\":\"yellow\"}],\"italic\":false}]}"
+        ]
+    },
+    {
+        "chatMessages":
+        [
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"color\":\"yellow\"},{\"text\":\"WoolNotwools\",\"color\":\"aqua\"},\"\",{\"text\":\"\",\"strikethrough\":false,\"obfuscated\":false,\"bold\":false,\"italic\":false,\"underlined\":false},{\"text\":\" has quit!\",\"color\":\"yellow\"},{\"text\":\"\",\"color\":\"yellow\"}],\"italic\":false}"
+        ]
+    },
+    {
+        "playerListEntries":
+        [
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"\",\"color\":\"aqua\"}],\"italic\":false},\"NatpDak\",{\"text\":\"\",\"italic\":false}],\"color\":\"aqua\"}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"\",\"color\":\"gold\"}],\"italic\":false},\"Nescafe755\",{\"text\":\"\",\"italic\":false}],\"color\":\"gold\"}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"\",\"color\":\"gray\"}],\"italic\":false},\"BELbimba\",{\"text\":\"\",\"italic\":false}],\"color\":\"gray\"}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"\",\"color\":\"gray\"}],\"italic\":false},\"xShadow231x\",{\"text\":\"\",\"italic\":false}],\"color\":\"gray\"}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"\",\"color\":\"gold\"}],\"italic\":false},\"Yria\",{\"text\":\"\",\"italic\":false}],\"color\":\"gold\"}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"\",\"color\":\"aqua\"}],\"italic\":false},\"Gyroburg\",{\"text\":\"\",\"italic\":false}],\"color\":\"aqua\"}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"\",\"color\":\"gray\"}],\"italic\":false},\"glenda89\",{\"text\":\"\",\"italic\":false}],\"color\":\"gray\"}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"\",\"color\":\"gray\"}],\"italic\":false},\"fitzlander\",{\"text\":\"\",\"italic\":false}],\"color\":\"gray\"}"
+        ]
+    },
+    {
+        "chatMessages":
+        [
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"color\":\"yellow\"},{\"text\":\"The game starts in \",\"color\":\"yellow\"},{\"text\":\"\",\"color\":\"green\"},{\"text\":\"1\",\"color\":\"red\"},{\"text\":\" second!\",\"color\":\"yellow\"},{\"text\":\"\",\"color\":\"yellow\"}],\"italic\":false}"
+        ],
+        "title": "\"§c1\"",
+        "subtitle": "\"\""
+    },
+    {
+        "scoreboardLines":
+        [
+            "\"GUESS THE BUILD\"",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"07/18/25  \",\"color\":\"gray\"},{\"text\":\"m9\",\"color\":\"dark_gray\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0DK\",\"color\":\"dark_gray\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Players: \",\"color\":\"white\"},{\"text\":\"8/10\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Starting in \",\"color\":\"white\"},{\"text\":\"00\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\":01\",\"color\":\"green\"},{\"text\":\" to\",\"color\":\"white\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"allow time for\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"additional playe\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"extra\":[\"rs\"],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Mode: \",\"color\":\"white\"},{\"text\":\"Guess Th\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"e Build\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"www.hypixel.ne\",\"color\":\"yellow\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"t\",\"color\":\"yellow\"}],\"italic\":false}]}"
+        ]
+    },
+    {
+        "scoreboardLines":
+        [],
+        "playerListEntries":
+        [
+            "\"Nescafe755\"",
+            "\"fitzlander\"",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"\",\"color\":\"white\"}],\"italic\":false},\"Yria\",{\"text\":\"\",\"italic\":false}],\"color\":\"white\"}",
+            "\"xShadow231x\"",
+            "\"NatpDak\"",
+            "\"glenda89\"",
+            "\"Gyroburg\"",
+            "\"BELbimba\""
+        ]
+    },
+    {
+        "actionBarMessage": "\"\""
+    },
+    {
+        "scoreboardLines":
+        [
+            "\"GUESS THE BUILD\"",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"07/18/25  \",\"color\":\"gray\"},{\"text\":\"m9\",\"color\":\"dark_gray\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0DK\",\"color\":\"dark_gray\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Builder:\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\" \",\"color\":\"white\"},{\"text\":\"BELbimba\",\"color\":\"gray\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"NatpDak\",\"color\":\"aqua\"},{\"text\":\": \",\"color\":\"white\"},{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Gyroburg\",\"color\":\"aqua\"},{\"text\":\": \",\"color\":\"white\"},{\"text\":\"\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"fitzlander\",\"color\":\"gray\"},{\"text\":\": \",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"...\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Yria\",\"color\":\"gold\"},{\"text\":\": \",\"color\":\"white\"},{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Starts In: \",\"color\":\"white\"},{\"text\":\"00:\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"10\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Theme:\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\" \",\"color\":\"white\"},{\"text\":\"???\",\"color\":\"red\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"www.hypixel.ne\",\"color\":\"yellow\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"t\",\"color\":\"yellow\"}],\"italic\":false}]}"
+        ],
+        "playerListEntries":
+        [
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Master\",\"color\":\"gold\"},\"\",{\"text\":\"\",\"extra\":[\" \"],\"strikethrough\":false,\"obfuscated\":false,\"bold\":false,\"italic\":false,\"underlined\":false}],\"italic\":false},\"Nescafe755\",{\"text\":\"\",\"extra\":[\" \",{\"text\":\"$\",\"color\":\"yellow\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Master\",\"color\":\"gold\"},\"\",{\"text\":\"\",\"extra\":[\" \"],\"strikethrough\":false,\"obfuscated\":false,\"bold\":false,\"italic\":false,\"underlined\":false}],\"italic\":false},\"Yria\",{\"text\":\"\",\"extra\":[\" \",{\"text\":\"≈\",\"color\":\"yellow\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Untrained\",\"color\":\"gray\"},\"\",{\"text\":\"\",\"extra\":[\" \"],\"strikethrough\":false,\"obfuscated\":false,\"bold\":false,\"italic\":false,\"underlined\":false}],\"italic\":false},\"xShadow231x\",{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Experienced\",\"color\":\"aqua\"},\"\",{\"text\":\"\",\"extra\":[\" \"],\"strikethrough\":false,\"obfuscated\":false,\"bold\":false,\"italic\":false,\"underlined\":false}],\"italic\":false},\"BELbimba\",{\"text\":\"\",\"italic\":false}]}"
+        ],
+        "chatMessages":
+        [
+            "{\"text\":\"\",\"italic\":false}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"color\":\"yellow\"},{\"text\":\"Builder: \",\"color\":\"yellow\"},{\"text\":\"BELbimba\",\"color\":\"gray\"},{\"text\":\"\",\"color\":\"gray\"},{\"text\":\"\",\"color\":\"yellow\"}],\"italic\":false}"
+        ],
+        "title": "\"\"",
+        "subtitle": "\"§eTheme is being selected...\""
+    },
+    {
+        "playerListEntries":
+        [
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Master\",\"color\":\"gold\"},\"\",{\"text\":\"\",\"extra\":[\" \"],\"strikethrough\":false,\"obfuscated\":false,\"bold\":false,\"italic\":false,\"underlined\":false}],\"italic\":false},\"Yria\",{\"text\":\"\",\"extra\":[\" \",{\"text\":\"≈\",\"color\":\"yellow\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Experienced\",\"color\":\"aqua\"},\"\",{\"text\":\"\",\"extra\":[\" \"],\"strikethrough\":false,\"obfuscated\":false,\"bold\":false,\"italic\":false,\"underlined\":false}],\"italic\":false},\"BELbimba\",{\"text\":\"\",\"italic\":false}]}"
+        ]
+    },
+    {
+        "scoreboardLines":
+        [
+            "\"GUESS THE BUILD\"",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"07/18/25  \",\"color\":\"gray\"},{\"text\":\"m9\",\"color\":\"dark_gray\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0DK\",\"color\":\"dark_gray\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Builder:\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\" \",\"color\":\"white\"},{\"text\":\"BELbimba\",\"color\":\"gray\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Gyroburg\",\"color\":\"aqua\"},{\"text\":\": \",\"color\":\"white\"},{\"text\":\"\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"fitzlander\",\"color\":\"gray\"},{\"text\":\": \",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"glenda89\",\"color\":\"gray\"},{\"text\":\": \",\"color\":\"white\"},{\"text\":\"\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"...\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Yria\",\"color\":\"gold\"},{\"text\":\": \",\"color\":\"white\"},{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Starts In: \",\"color\":\"white\"},{\"text\":\"00:\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"10\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Theme:\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\" \",\"color\":\"white\"},{\"text\":\"???\",\"color\":\"red\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"www.hypixel.ne\",\"color\":\"yellow\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"t\",\"color\":\"yellow\"}],\"italic\":false}]}"
+        ]
+    },
+    {
+        "scoreboardLines":
+        [
+            "\"GUESS THE BUILD\"",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"07/18/25  \",\"color\":\"gray\"},{\"text\":\"m9\",\"color\":\"dark_gray\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0DK\",\"color\":\"dark_gray\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Builder:\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\" \",\"color\":\"white\"},{\"text\":\"BELbimba\",\"color\":\"gray\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Gyroburg\",\"color\":\"aqua\"},{\"text\":\": \",\"color\":\"white\"},{\"text\":\"\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"fitzlander\",\"color\":\"gray\"},{\"text\":\": \",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"glenda89\",\"color\":\"gray\"},{\"text\":\": \",\"color\":\"white\"},{\"text\":\"\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"...\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Yria\",\"color\":\"gold\"},{\"text\":\": \",\"color\":\"white\"},{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Starts In: \",\"color\":\"white\"},{\"text\":\"00:\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"09\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Theme:\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\" \",\"color\":\"white\"},{\"text\":\"???\",\"color\":\"red\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"www.hypixel.ne\",\"color\":\"yellow\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"t\",\"color\":\"yellow\"}],\"italic\":false}]}"
+        ]
+    },
+    {
+        "scoreboardLines":
+        [
+            "\"GUESS THE BUILD\"",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"07/18/25  \",\"color\":\"gray\"},{\"text\":\"m9\",\"color\":\"dark_gray\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0DK\",\"color\":\"dark_gray\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Builder:\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\" \",\"color\":\"white\"},{\"text\":\"BELbimba\",\"color\":\"gray\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Gyroburg\",\"color\":\"aqua\"},{\"text\":\": \",\"color\":\"white\"},{\"text\":\"\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"fitzlander\",\"color\":\"gray\"},{\"text\":\": \",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"glenda89\",\"color\":\"gray\"},{\"text\":\": \",\"color\":\"white\"},{\"text\":\"\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"...\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Yria\",\"color\":\"gold\"},{\"text\":\": \",\"color\":\"white\"},{\"text\":\"0\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Starts In: \",\"color\":\"white\"},{\"text\":\"00:\",\"color\":\"green\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"08\",\"color\":\"green\"}],\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"Theme:\",\"color\":\"white\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\" \",\"color\":\"white\"},{\"text\":\"???\",\"color\":\"red\"}],\"italic\":false},{\"text\":\"\",\"italic\":false}]}",
+            "{\"text\":\"\",\"extra\":[{\"text\":\"\",\"extra\":[{\"text\":\"www.hypixel.ne\",\"color\":\"yellow\"}],\"italic\":false},{\"text\":\"\",\"extra\":[{\"text\":\"t\",\"color\":\"yellow\"}],\"italic\":false}]}"
+        ]
+    }
 ]
