@@ -3,7 +3,7 @@
 ## Shortcut Reminder Rewrite
 The shortcut reminder module has been completely reworked, and now automatically pulls translation data from an external source (GTB Platform).
 This means that the shortcut list will not be included with GuessTheUtils anymore, instead updating independently of the mod.
-Due to a large amount of multiwords using non-latin characters, a new option has been added to hide those from the reminder messages. In a future update, I might add options to toggle each language on or off.
+Additionally, a new option to hide either CJK (Chinese, Japanese, Korean) shortcuts, or ones that contain non-English characters.
 Big thanks to [zmh-program](https://github.com/zmh-program) for making his database easily accessible.
 
 ## Config Location Change

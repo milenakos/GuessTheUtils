@@ -104,6 +104,8 @@ public class GuessTheUtilsConfig {
 
     // SHORTCUT REMINDER
 
+    public enum ShortcutFilterType { NONE, CJK, NON_ASCII }
+
     @SerialEntry
     @AutoGen(category = "modules", group = "shortcut_reminder")
     @TickBox
@@ -111,8 +113,8 @@ public class GuessTheUtilsConfig {
 
     @SerialEntry
     @AutoGen(category = "modules", group = "shortcut_reminder")
-    @TickBox
-    public boolean shortcutReminderIncludeLatinOnlyShortcuts = true;
+    @EnumCycler
+    public ShortcutFilterType shortcutReminderFilterType = ShortcutFilterType.CJK;
 
     // CHAT COOLDOWN
 

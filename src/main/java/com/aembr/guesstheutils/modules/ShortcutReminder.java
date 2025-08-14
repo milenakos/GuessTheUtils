@@ -6,7 +6,6 @@ import com.aembr.guesstheutils.Utils;
 import com.aembr.guesstheutils.config.GuessTheUtilsConfig;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mojang.datafixers.kinds.IdF;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 
@@ -18,7 +17,6 @@ import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ShortcutReminder extends GTBEvents.Module {
     private static final String GITHUB_BASE_URL = "https://raw.githubusercontent.com/zmh-program/gtb_platform/refs/heads/main/lib/source/";
@@ -97,7 +95,7 @@ public class ShortcutReminder extends GTBEvents.Module {
         });
 
         filteredShortcuts = filterShortcuts(new ArrayList<>(currentShortcuts),
-                GuessTheUtilsConfig.CONFIG.instance().shortcutReminderIncludeLatinOnlyShortcuts);
+                GuessTheUtilsConfig.CONFIG.instance().shortcutReminderFilterType);
 
         if (currentShortcuts.isEmpty()) {
             Utils.sendMessage(Text.literal("No shortcuts for ")
@@ -134,14 +132,11 @@ public class ShortcutReminder extends GTBEvents.Module {
         }
     }
 
-    public static List<ShortcutEntry> filterShortcuts(List<ShortcutEntry> entries, boolean latinOnly) {
-        if (latinOnly) {
-            entries = entries.stream()
-                    .filter(sc -> isAscii(sc.shortcut))
-                    .toList();
-        }
+    public static List<ShortcutEntry> filterShortcuts(List<ShortcutEntry> entries,
+                                                      GuessTheUtilsConfig.ShortcutFilterType filterType) {
+        List<ShortcutEntry> filteredEntries = filterEntriesByType(entries, filterType);
 
-        List<ShortcutEntry> result = new ArrayList<>(entries);
+        List<ShortcutEntry> result = new ArrayList<>(filteredEntries);
         for (int i = 0; i < result.size(); i++) {
             for (int j = 0; j < result.size(); j++) {
                 if (i == j) continue;
@@ -205,8 +200,26 @@ public class ShortcutReminder extends GTBEvents.Module {
         filteredShortcuts = new ArrayList<>();
     }
 
-    private static boolean isAscii(String str) {
-        return str.chars().allMatch(c -> c < 128);
+    static List<ShortcutEntry> filterEntriesByType(List<ShortcutEntry> entries,
+                                                   GuessTheUtilsConfig.ShortcutFilterType filterType) {
+        return switch (filterType) {
+            case CJK -> entries.stream()
+                    .filter(entry -> !containsCJK(entry.shortcut))
+                    .collect(Collectors.toList());
+            case NON_ASCII -> entries.stream()
+                    .filter(entry -> isAscii(entry.shortcut))
+                    .collect(Collectors.toList());
+            default -> entries;
+        };
+    }
+
+    private static boolean containsCJK(String input) {
+        return input.matches(".*[\\u4E00-\\u9FFF\\u3400-\\u4DBF\\uF900-\\uFAFF\\u3040-\\u309F\\u30A0-\\u30FF\\uAC00-\\uD7AF].*");
+    }
+
+    private static boolean isAscii(String shortcut) {
+        return shortcut.codePoints()
+                .allMatch(cp -> cp < 128);
     }
 
     private String readFile(String filename) throws IOException {

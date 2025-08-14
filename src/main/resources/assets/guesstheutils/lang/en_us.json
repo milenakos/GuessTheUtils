@@ -40,8 +40,12 @@
   "yacl3.config.enum.BuilderOffsetType.shift": "Shift",
 
   "yacl3.config.guesstheutils:config.enableShortcutReminderModule": "Enable Shortcut Reminders",
-  "yacl3.config.guesstheutils:config.shortcutReminderIncludeLatinOnlyShortcuts": "Latin Letters Only",
-  "yacl3.config.guesstheutils:config.shortcutReminderIncludeLatinOnlyShortcuts.desc": "Only show shortcuts that can be typed with a Latin keyboard, removing accents and special characters.",
+  "yacl3.config.guesstheutils:config.shortcutReminderFilterType": "Shortcut Filter Type",
+  "yacl3.config.guesstheutils:config.shortcutReminderFilterType.desc": "Hides shortcuts that contain certain characters:\n\n\"CJK\" option hides all Chinese, Japanese, and Korean shortcuts from reminder messages.\n\"Non-ASCII\" option hides all shortcuts that contain non-latin characters, which cannot be typed on an English keyboard.",
+
+  "yacl3.config.enum.ShortcutFilterType.none": "None",
+  "yacl3.config.enum.ShortcutFilterType.cjk": "CJK",
+  "yacl3.config.enum.ShortcutFilterType.non_ascii": "Non-ASCII",
 
   "yacl3.config.guesstheutils:config.enableChatCooldownModule": "Enable Chat Cooldown Tracking",
   "yacl3.config.guesstheutils:config.chatCooldownPingVolume": "Ping Volume",
