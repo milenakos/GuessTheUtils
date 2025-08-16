@@ -175,9 +175,9 @@ public class GTBEvents {
 
     @SuppressWarnings("SequencedCollectionMethodCanBeUsed")
     private void onGameStart(List<Text> lobbyList, List<Text> setupList, List<Text> finalList) {
-        System.out.println("lobby list: " + lobbyList);
-        System.out.println("setup list: " + setupList);
-        System.out.println("final list: " + finalList);
+//        System.out.println("lobby list: " + lobbyList);
+//        System.out.println("setup list: " + setupList);
+//        System.out.println("final list: " + finalList);
 
         List<InitialPlayerData> players = new ArrayList<InitialPlayerData>();
         for (Text playerEntry : finalList) {

@@ -66,8 +66,6 @@ public class CustomScoreboard /*? >=1.21.6 {*/ implements HudElement /*?}*/ {
     public static int heightOffset = 20;
     public static int playerNameRightPad = 4;
 
-    public static int builderOffset = 8;
-
     static GameTracker tracker;
     //? if >=1.21.6
     Identifier identifier = Identifier.of("guess_the_utils_scoreboard");

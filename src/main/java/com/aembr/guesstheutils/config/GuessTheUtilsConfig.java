@@ -95,7 +95,7 @@ public class GuessTheUtilsConfig {
     @SerialEntry
     @AutoGen(category = "modules", group = "custom_scoreboard")
     @IntSlider(min = 0, max = 20, step = 1)
-    public int customScoreboardBuilderOffset = 6;
+    public int customScoreboardBuilderOffset = 0;
 
     @SerialEntry
     @AutoGen(category = "modules", group = "custom_scoreboard")
