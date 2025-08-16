@@ -49,7 +49,7 @@ public class Commands {
                 .executes(command -> {
                     Message.displayMessage(Text.literal("/translate usage:\n")
                             .append("/translate <language> <theme> for a specific language translation.\n")
-                            .append("/translate * <theme> for all translations.")
+                            .append("/translate all <theme> for all translations.\n")
                             .append("<theme> accepts shortcuts, lowercase, or without spaces."));
                     return 1;
                 })
@@ -87,7 +87,7 @@ public class Commands {
             return;
         }
 
-        if (lang.equals("*")) {
+        if (lang.equals("all")) {
             MutableText result = Text.empty();
             Map<String, TranslationData.Translation> translations = entry.translations();
             for (Map.Entry<String, TranslationData.Translation> translation : translations.entrySet()) {
@@ -109,9 +109,9 @@ public class Commands {
                                 Style.EMPTY.withClickEvent(clickEvent).withColor(Formatting.YELLOW)));
             }
 
-            Message.displayMessage(Text.literal("All translations for theme ")
+            Message.displayMessage(Text.empty().append(Text.literal("All translations for theme ").formatted(Formatting.GRAY))
                     .append(Text.literal(entry.theme()).formatted(Formatting.GREEN))
-                    .append(":")
+                    .append(":").formatted(Formatting.GRAY)
                     .append(result));
             return;
         }
@@ -129,7 +129,7 @@ public class Commands {
         }
 
         if (!translation.isApproved()) {
-            Message.displayMessage(Text.literal(entry.theme()).formatted(Formatting.GREEN)
+            Message.displayMessage(Text.empty().append(Text.literal(entry.theme()).formatted(Formatting.GREEN))
                     .append(Text.literal(" has no approved ").formatted(Formatting.RED))
                     .append(Text.literal(lang.toLowerCase()).formatted(Formatting.AQUA))
                     .append(Text.literal(" translation.").formatted(Formatting.RED)));
@@ -143,10 +143,10 @@ public class Commands {
                 translation.translation());
          *///?}
 
-        Message.displayMessage(Text.literal(lang.toLowerCase()).formatted(Formatting.AQUA)
-                .append(" translation for ").formatted(Formatting.WHITE)
+        Message.displayMessage(Text.empty().append(Text.literal(lang.toLowerCase()).formatted(Formatting.AQUA))
+                .append(" translation for ").formatted(Formatting.GRAY)
                 .append(Text.literal(entry.theme()).formatted(Formatting.GREEN))
-                .append(": ").formatted(Formatting.WHITE)
+                .append(": ").formatted(Formatting.GRAY)
                 .append(Text.literal(translation.translation())
                         .formatted(Formatting.GOLD).formatted(Formatting.BOLD))
                 .append(Text.literal(" [Copy]").setStyle(
