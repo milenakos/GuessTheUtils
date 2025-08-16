@@ -1,13 +1,12 @@
 package com.aembr.guesstheutils.modules;
 
 import com.aembr.guesstheutils.GTBEvents;
+import com.aembr.guesstheutils.utils.Message;
 import com.aembr.guesstheutils.utils.TranslationData;
-import com.aembr.guesstheutils.utils.Utils;
 import com.aembr.guesstheutils.config.GuessTheUtilsConfig;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 
-import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -55,7 +54,7 @@ public class ShortcutReminder extends GTBEvents.Module {
                 GuessTheUtilsConfig.CONFIG.instance().shortcutReminderFilterType);
 
         if (currentShortcuts.isEmpty()) {
-            Utils.sendMessage(Text.literal("No shortcuts for ")
+            Message.displayMessage(Text.literal("No shortcuts for ")
                     .append(Text.literal(currentTheme).formatted(THEME_COLOR))
                     .append(Text.literal(".")));
             return;
@@ -75,12 +74,12 @@ public class ShortcutReminder extends GTBEvents.Module {
         }
 
         if (filteredShortcuts.isEmpty()) {
-            Utils.sendMessage(Text.literal("No suitable shortcuts for ")
+            Message.displayMessage(Text.literal("No suitable shortcuts for ")
                     .append(Text.literal(currentTheme).formatted(THEME_COLOR))
                     .append(Text.literal(" found. "))
                     .append(showAllText));
         } else {
-            Utils.sendMessage(Text.literal("Shortcuts for ")
+            Message.displayMessage(Text.literal("Shortcuts for ")
                     .append(Text.literal(currentTheme).formatted(THEME_COLOR))
                     .append(Text.literal(": "))
                     .append(showAllText)

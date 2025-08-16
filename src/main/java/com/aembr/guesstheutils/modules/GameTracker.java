@@ -1,6 +1,7 @@
 package com.aembr.guesstheutils.modules;
 
 import com.aembr.guesstheutils.GTBEvents;
+import com.aembr.guesstheutils.utils.Message;
 import com.aembr.guesstheutils.utils.Utils;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
@@ -81,7 +82,7 @@ public class GameTracker extends GTBEvents.Module {
 
     private void onUserRejoin(GTBEvents.UserRejoinEvent userRejoinEvent) {
         if (game == null || game.leaveState == null || game.leaveRound == -1 || game.leaveBuilder == null) {
-            Utils.sendMessage("Tracking is disabled for this game, as you weren't present at the start " +
+            Message.displayMessage("Tracking is disabled for this game, as you weren't present at the start " +
                     "(most commonly caused by restarting the game).");
             return;
         }
@@ -219,10 +220,10 @@ public class GameTracker extends GTBEvents.Module {
             // and rejoined before the start of another. we just need to check if they haven't skipped any rounds
             if (leaveRound != -1) {
                 if (currentRound == leaveRound + 1) {
-                    Utils.sendMessage("Tracking data valid!");
+                    Message.displayMessage("Tracking data valid!");
                     clearLeaveState();
                 } else {
-                    Utils.sendMessage("Tracking data invalid! Falling back to vanilla scoreboard.");
+                    Message.displayMessage("Tracking data invalid! Falling back to vanilla scoreboard.");
                     tracker.clearGame();
                     return;
                 }
@@ -390,14 +391,14 @@ public class GameTracker extends GTBEvents.Module {
             }
 
             if (leaveState.equals(GTBEvents.GameState.ROUND_BUILD) || state.equals(GTBEvents.GameState.ROUND_BUILD)) {
-                Utils.sendMessage("Players may have gained points while you were absent. Falling back to vanilla scoreboard.");
+                Message.displayMessage("Players may have gained points while you were absent. Falling back to vanilla scoreboard.");
                 tracker.clearGame();
                 return;
             }
 
             if (currentBuilder.equals(leaveBuilder)) {
                 if (!state.equals(leaveState)) {
-                    Utils.sendMessage("Players may have gained points while you were absent. Falling back to vanilla scoreboard.");
+                    Message.displayMessage("Players may have gained points while you were absent. Falling back to vanilla scoreboard.");
                     tracker.clearGame();
                     return;
                 }
@@ -405,9 +406,9 @@ public class GameTracker extends GTBEvents.Module {
 
             } else {
                 if (leaveState.equals(GTBEvents.GameState.ROUND_END) && state.equals(GTBEvents.GameState.ROUND_PRE)) {
-                    Utils.sendMessage("Checking if tracking data for this game is still valid...");
+                    Message.displayMessage("Checking if tracking data for this game is still valid...");
                 } else {
-                    Utils.sendMessage("Players may have gained points while you were absent. Falling back to vanilla scoreboard.");
+                    Message.displayMessage("Players may have gained points while you were absent. Falling back to vanilla scoreboard.");
                     tracker.clearGame();
                 }
             }

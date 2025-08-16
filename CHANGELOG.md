@@ -23,6 +23,8 @@ To manually transfer your old config, rename `<minecraft_root>/config/guesstheut
 
 ## Improvements
 - Added `/translate <language> <theme>` command to get approved translations of a given theme (thanks @sophie.fox)
+- Added `/qgtb` command to quickly queue/requeue GTB (thanks @sophie.fox)
+- Added `/lrj` command which will leave and rejoin automatically
 - Changed theme length display to show individual word lengths
 - Added a configurable offset to current builder's scoreboard line for improved visibility
 - Added options for scoreboard background opacity and highlight strength

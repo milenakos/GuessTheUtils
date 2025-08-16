@@ -2,6 +2,7 @@ package com.aembr.guesstheutils;
 
 import com.aembr.guesstheutils.config.GuessTheUtilsConfig;
 import com.aembr.guesstheutils.modules.*;
+import com.aembr.guesstheutils.utils.Message;
 import com.aembr.guesstheutils.utils.TranslationData;
 import com.aembr.guesstheutils.utils.Utils;
 import net.fabricmc.api.ClientModInitializer;
@@ -108,8 +109,8 @@ public class GuessTheUtils implements ClientModInitializer {
                 Tick error = new Tick();
                 error.error = stackTrace;
                 replay.addTick(error);
-                Utils.sendMessage("Exception in GTBEvents: " + e.getMessage() + ". Saving details to replay file...");
-                Utils.sendMessage("Game restart required.");
+                Message.displayMessage("Exception in GTBEvents: " + e.getMessage() + ". Saving details to replay file...");
+                Message.displayMessage("Game restart required.");
                 replay.save();
             } finally {
                 currentTick = new Tick();

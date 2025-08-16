@@ -1,7 +1,7 @@
 package com.aembr.guesstheutils.config;
 
 import com.aembr.guesstheutils.GuessTheUtils;
-import com.aembr.guesstheutils.utils.Utils;
+import com.aembr.guesstheutils.utils.Message;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.autogen.*;
@@ -158,7 +158,7 @@ public class GuessTheUtilsConfig {
         if (FabricLoader.getInstance().isModLoaded("yet_another_config_lib_v3")) {
             return CONFIG.generateGui().generateScreen(parent);
         } else {
-            Utils.sendMessage("YetAnotherConfigLib must be installed to use config menu!");
+            Message.displayMessage("YetAnotherConfigLib must be installed to use config menu!");
             return null;
         }
     }

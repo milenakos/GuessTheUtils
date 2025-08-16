@@ -1,5 +1,6 @@
 package com.aembr.guesstheutils;
 
+import com.aembr.guesstheutils.utils.Message;
 import com.aembr.guesstheutils.utils.Utils;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
@@ -542,7 +543,7 @@ public class GTBEvents {
             String stackTrace = Utils.getStackTraceAsString(e);
 
             if (GuessTheUtils.CLIENT != null && GuessTheUtils.CLIENT.player != null) {
-                Utils.sendMessage("Exception in module " + moduleName + ": " + e.getMessage() + ". Saving details to replay file...");
+                Message.displayMessage("Exception in module " + moduleName + ": " + e.getMessage() + ". Saving details to replay file...");
 
                 Tick error = new Tick();
                 error.error = stackTrace;
@@ -556,13 +557,13 @@ public class GTBEvents {
                 case STOP:
                     GuessTheUtils.LOGGER.error("Stopping module: {}", moduleName);
                     unsubscribeModule(module);
-                    Utils.sendMessage("Stopped " + moduleName + ".");
+                    Message.displayMessage("Stopped " + moduleName + ".");
                     break;
                 case RESTART:
                     GuessTheUtils.LOGGER.error("Restarting module: {}", moduleName);
                     unsubscribeModule(module);
                     createNewModuleInstance(module.getClass());
-                    Utils.sendMessage("Restarted " + moduleName + ".");
+                    Message.displayMessage("Restarted " + moduleName + ".");
                     break;
                 case LOG_AND_CONTINUE:
                     GuessTheUtils.LOGGER.error("Logging error and continuing for module: {}", moduleName);

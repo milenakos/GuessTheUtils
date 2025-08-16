@@ -1,6 +1,5 @@
 package com.aembr.guesstheutils.utils;
 
-import com.aembr.guesstheutils.GuessTheUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.scoreboard.*;
@@ -55,17 +54,6 @@ public class Utils {
             }
             return (Text) entryText;
         }).toList();
-    }
-
-    public static void sendMessage(String message) {
-        if (GuessTheUtils.CLIENT == null || GuessTheUtils.CLIENT.player == null) return;
-        GuessTheUtils.CLIENT.player.sendMessage(GuessTheUtils.prefix.copy()
-                .append(Text.literal(message).formatted(Formatting.GRAY)), false);
-    }
-
-    public static void sendMessage(Text message) {
-        if (GuessTheUtils.CLIENT == null || GuessTheUtils.CLIENT.player == null) return;
-        GuessTheUtils.CLIENT.player.sendMessage(GuessTheUtils.prefix.copy().append(message), false);
     }
 
     public static class FixedSizeBuffer<T> {

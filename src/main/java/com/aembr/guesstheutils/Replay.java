@@ -1,6 +1,6 @@
 package com.aembr.guesstheutils;
 
-import com.aembr.guesstheutils.utils.Utils;
+import com.aembr.guesstheutils.utils.Message;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -70,7 +70,7 @@ public class Replay {
         /*ClickEvent clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/guesstheutils replay open");
         *///?}
 
-        Utils.sendMessage(Text.literal("Replay " + filename + " saved. ")
+        Message.displayMessage(Text.literal("Replay " + filename + " saved. ")
                 .append(Text.literal("[Open folder]").setStyle(Style.EMPTY.withClickEvent(clickEvent))));
     }
 

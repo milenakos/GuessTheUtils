@@ -1,7 +1,8 @@
 package com.aembr.guesstheutils;
 
+import com.aembr.guesstheutils.utils.Message;
+import com.aembr.guesstheutils.utils.Scheduler;
 import com.aembr.guesstheutils.utils.TranslationData;
-import com.aembr.guesstheutils.utils.Utils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
@@ -42,12 +43,11 @@ public class Commands {
                             GuessTheUtils.openConfig = true;
                             return 1;
                         }))
-
         );
 
         dispatcher.register(ClientCommandManager.literal("translate")
                 .executes(command -> {
-                    Utils.sendMessage(Text.literal("/translate usage:\n")
+                    Message.displayMessage(Text.literal("/translate usage:\n")
                             .append("/translate <language> <theme> for a specific language translation.\n")
                             .append("/translate * <theme> for all translations.")
                             .append("<theme> accepts shortcuts, lowercase, or without spaces."));
@@ -61,6 +61,19 @@ public class Commands {
                                     printTranslation(lang, theme);
                                     return 1;
                                 }))));
+
+        dispatcher.register(ClientCommandManager.literal("qgtb")
+                .executes(command -> {
+                    Message.sendMessage("/queue build_battle_guess_the_build");
+                    return 1;
+                }));
+
+        dispatcher.register(ClientCommandManager.literal("lrj")
+                .executes(command -> {
+                    Message.sendMessage("/hub");
+                    Scheduler.schedule(20, () -> Message.sendMessage("/back"));
+                    return 1;
+                }));
     }
 
     private static void printTranslation(String lang, String theme) {
@@ -70,7 +83,7 @@ public class Commands {
                         || Objects.equals(e.shortcut(), theme)).findAny().orElse(null);
 
         if (entry == null) {
-            Utils.sendMessage(Text.literal("Theme not found!").formatted(Formatting.RED));
+            Message.displayMessage(Text.literal("Theme not found!").formatted(Formatting.RED));
             return;
         }
 
@@ -96,7 +109,7 @@ public class Commands {
                                 Style.EMPTY.withClickEvent(clickEvent).withColor(Formatting.YELLOW)));
             }
 
-            Utils.sendMessage(Text.literal("All translations for theme ")
+            Message.displayMessage(Text.literal("All translations for theme ")
                     .append(Text.literal(entry.theme()).formatted(Formatting.GREEN))
                     .append(":")
                     .append(result));
@@ -109,14 +122,14 @@ public class Commands {
                             .filter(e -> e.getValue().isApproved())
                     .map(Map.Entry::getKey).toList();
 
-            Utils.sendMessage(Text.literal("Language not found. Try /translate <theme> for " +
+            Message.displayMessage(Text.literal("Language not found. Try /translate <theme> for " +
                             "all translations, or pick a language from the following list:\n")
                     .append(Text.literal(validLanguages.toString())).formatted(Formatting.RED));
             return;
         }
 
         if (!translation.isApproved()) {
-            Utils.sendMessage(Text.literal(entry.theme()).formatted(Formatting.GREEN)
+            Message.displayMessage(Text.literal(entry.theme()).formatted(Formatting.GREEN)
                     .append(Text.literal(" has no approved ").formatted(Formatting.RED))
                     .append(Text.literal(lang.toLowerCase()).formatted(Formatting.AQUA))
                     .append(Text.literal(" translation.").formatted(Formatting.RED)));
@@ -130,7 +143,7 @@ public class Commands {
                 translation.translation());
          *///?}
 
-        Utils.sendMessage(Text.literal(lang.toLowerCase()).formatted(Formatting.AQUA)
+        Message.displayMessage(Text.literal(lang.toLowerCase()).formatted(Formatting.AQUA)
                 .append(" translation for ").formatted(Formatting.WHITE)
                 .append(Text.literal(entry.theme()).formatted(Formatting.GREEN))
                 .append(": ").formatted(Formatting.WHITE)
