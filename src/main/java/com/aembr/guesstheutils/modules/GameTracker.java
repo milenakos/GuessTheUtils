@@ -1,12 +1,11 @@
 package com.aembr.guesstheutils.modules;
 
 import com.aembr.guesstheutils.GTBEvents;
-import com.aembr.guesstheutils.Utils;
+import com.aembr.guesstheutils.utils.Utils;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 

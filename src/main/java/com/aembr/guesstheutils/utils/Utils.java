@@ -1,5 +1,6 @@
-package com.aembr.guesstheutils;
+package com.aembr.guesstheutils.utils;
 
+import com.aembr.guesstheutils.GuessTheUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.scoreboard.*;

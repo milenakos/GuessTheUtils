@@ -1,7 +1,7 @@
 package com.aembr.guesstheutils.config;
 
 import com.aembr.guesstheutils.GuessTheUtils;
-import com.aembr.guesstheutils.Utils;
+import com.aembr.guesstheutils.utils.Utils;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.autogen.*;

@@ -2,6 +2,8 @@ package com.aembr.guesstheutils;
 
 import com.aembr.guesstheutils.config.GuessTheUtilsConfig;
 import com.aembr.guesstheutils.modules.*;
+import com.aembr.guesstheutils.utils.TranslationData;
+import com.aembr.guesstheutils.utils.Utils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -70,7 +72,7 @@ public class GuessTheUtils implements ClientModInitializer {
         *///?}
 
         replay.initialize();
-        shortcutReminder.init();
+        TranslationData.init();
         liveE2ERunner = new LiveE2ERunner(Replay.load(GuessTheUtils.class.getResourceAsStream("/assets/live_tests/TestBuggyLeaverDetection.json")));
 
         GuessTheUtilsConfig.CONFIG.load();
