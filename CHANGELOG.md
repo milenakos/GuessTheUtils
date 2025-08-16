@@ -26,6 +26,7 @@ To manually transfer your old config, rename `<minecraft_root>/config/guesstheut
 - Added `/qgtb` command to quickly queue/requeue GTB (thanks @sophie.fox)
 - Added `/lrj` command which will leave and rejoin automatically
 - Changed theme length display to show individual word lengths
+- Made score tracker more lenient when rejoining, only disabling it if score mismatches are actually detected
 - Added a configurable offset to current builder's scoreboard line for improved visibility
 - Added options for scoreboard background opacity and highlight strength
 - Added an easy way to open replays folder by clicking on the replay saved message, or executing `/guesstheutils replay open`

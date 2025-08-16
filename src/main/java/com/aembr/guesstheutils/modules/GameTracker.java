@@ -111,6 +111,11 @@ public class GameTracker extends GTBEvents.Module {
         game = null;
     }
 
+    private void clearGame(String message) {
+        clearGame();
+        Message.displayMessage(Text.literal(message).formatted(Formatting.RED));
+    }
+
     private void clearGameWithError(String error) {
         clearGame();
         throw new RuntimeException(error);
@@ -202,7 +207,8 @@ public class GameTracker extends GTBEvents.Module {
             if (builderName != null) {
                 Player builder = getPlayerFromName(builderName);
                 if (builder == null) {
-                    tracker.clearGameWithError("Player " + builderName + " not found in player list!");
+                    tracker.clearGame("Player " + builderName + " not found in " +
+                            "player list! Tracking is disabled for this game.");
                     return;
                 }
                 currentBuilder = builder;
@@ -216,18 +222,18 @@ public class GameTracker extends GTBEvents.Module {
             currentRound = current;
             oneSecondAlertReached = false;
 
-            // this check will only be true if the user left during the end of one round,
-            // and rejoined before the start of another. we just need to check if they haven't skipped any rounds
-            if (leaveRound != -1) {
-                if (currentRound == leaveRound + 1) {
-                    Message.displayMessage("Tracking data valid!");
-                    clearLeaveState();
-                } else {
-                    Message.displayMessage("Tracking data invalid! Falling back to vanilla scoreboard.");
-                    tracker.clearGame();
-                    return;
-                }
-            }
+//            // this check will only be true if the user left during the end of one round,
+//            // and rejoined before the start of another. we just need to check if they haven't skipped any rounds
+//            if (leaveRound != -1) {
+//                if (currentRound == leaveRound + 1) {
+//                    Message.displayMessage("Tracking data valid!");
+//                    clearLeaveState();
+//                } else {
+//                    Message.displayMessage("Tracking data invalid! Falling back to vanilla scoreboard.");
+//                    tracker.clearGame();
+//                    return;
+//                }
+//            }
 
             if (currentBuilder == null) {
                 tracker.clearGameWithError("currentBuilder is null!");
@@ -263,7 +269,8 @@ public class GameTracker extends GTBEvents.Module {
             for (GTBEvents.FormattedName fName : players) {
                 Player player = getPlayerFromName(fName.name());
                 if (player == null) {
-                    tracker.clearGameWithError("Player " + fName.name() + " not found in player list!");
+                    tracker.clearGame("Player " + fName.name() + " not found in " +
+                            "player list! Tracking is disabled for this game.");
                     return;
                 }
                 player.points[currentRound - 1] = Math.max(1, 3 - correctGuessesThisRound);
@@ -301,7 +308,7 @@ public class GameTracker extends GTBEvents.Module {
                 }
 
                 if (!verifyPoints(player, expected.getValue())) {
-                    tracker.clearGameWithError("Scores do not match expected!");
+                    tracker.clearGameWithError("Final scores do not match expected!");
                     return;
                 }
             }
@@ -314,7 +321,8 @@ public class GameTracker extends GTBEvents.Module {
                 if (trueScore == null) continue;
                 Player player = getPlayerFromName(trueScore.fName().name());
                 if (player == null) {
-                    tracker.clearGameWithError("Player " + trueScore.fName().name() + " not found in player list!");
+                    tracker.clearGame("Player " + trueScore.fName().name() + " not found in " +
+                            "player list! Tracking is disabled for this game.");
                     return;
                 }
 
@@ -329,7 +337,7 @@ public class GameTracker extends GTBEvents.Module {
                     } else {
                         // Sometimes the scoreboard is slow, so we want to wait a bit before we sound the alarm
                         if (player.scoreMismatchCounter > 0) { // increase this to wait longer
-                            tracker.clearGameWithError("Score mismatch!");
+                            tracker.clearGame("Score mismatch! Tracking is disabled for this game.");
                             return;
                         }
                         player.scoreMismatchCounter++;
@@ -390,34 +398,41 @@ public class GameTracker extends GTBEvents.Module {
                 return;
             }
 
-            if (leaveState.equals(GTBEvents.GameState.ROUND_BUILD) || state.equals(GTBEvents.GameState.ROUND_BUILD)) {
-                Message.displayMessage("Players may have gained points while you were absent. Falling back to vanilla scoreboard.");
-                tracker.clearGame();
-                return;
-            }
+            Message.displayMessage("Players may have gained points while you were absent. " +
+                    "Tracking for this game will automatically be disabled if any score " +
+                    "mismatches are detected.");
 
-            if (currentBuilder.equals(leaveBuilder)) {
-                if (!state.equals(leaveState)) {
-                    Message.displayMessage("Players may have gained points while you were absent. Falling back to vanilla scoreboard.");
-                    tracker.clearGame();
-                    return;
-                }
-                clearLeaveState();
+            clearLeaveState();
 
-            } else {
-                if (leaveState.equals(GTBEvents.GameState.ROUND_END) && state.equals(GTBEvents.GameState.ROUND_PRE)) {
-                    Message.displayMessage("Checking if tracking data for this game is still valid...");
-                } else {
-                    Message.displayMessage("Players may have gained points while you were absent. Falling back to vanilla scoreboard.");
-                    tracker.clearGame();
-                }
-            }
+//            if (leaveState.equals(GTBEvents.GameState.ROUND_BUILD) || state.equals(GTBEvents.GameState.ROUND_BUILD)) {
+//                Message.displayMessage("Players may have gained points while you were absent. Falling back to vanilla scoreboard.");
+//                tracker.clearGame();
+//                return;
+//            }
+//
+//            if (currentBuilder.equals(leaveBuilder)) {
+//                if (!state.equals(leaveState)) {
+//                    Message.displayMessage("Players may have gained points while you were absent. Falling back to vanilla scoreboard.");
+//                    tracker.clearGame();
+//                    return;
+//                }
+//                clearLeaveState();
+//
+//            } else {
+//                if (leaveState.equals(GTBEvents.GameState.ROUND_END) && state.equals(GTBEvents.GameState.ROUND_PRE)) {
+//                    Message.displayMessage("Checking if tracking data for this game is still valid...");
+//                } else {
+//                    Message.displayMessage("Players may have gained points while you were absent. Falling back to vanilla scoreboard.");
+//                    tracker.clearGame();
+//                }
+//            }
         }
 
         public void onPlayerChat(String playerName, String message) {
             Player player = getPlayerFromName(playerName);
             if (player == null) {
-                tracker.clearGameWithError("Player " + playerName + " not found in player list!");
+                tracker.clearGame("Player " + playerName + " not found in " +
+                        "player list! Tracking is disabled for this game.");
                 return;
             }
             onActivity(player);
