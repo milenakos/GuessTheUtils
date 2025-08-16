@@ -39,7 +39,12 @@ public class ShortcutReminder extends GTBEvents.Module {
         if (optionalResult.isEmpty()) return;
         TranslationData.TranslationDataEntry res = optionalResult.get();
 
-        if (res.shortcut() != null) currentShortcuts.add(new ShortcutEntry(res.shortcut(), List.of(currentTheme)));
+        if (res.shortcut() != null) {
+            if (res.multiwords().isEmpty() || res.multiwords().stream()
+                    .noneMatch(mw -> mw.multiword().equals(res.shortcut()))) {
+                currentShortcuts.add(new ShortcutEntry(res.shortcut(), List.of(currentTheme)));
+            }
+        }
 
         res.multiwords().forEach(mw -> {
             List<String> occurrences = mw.occurrences().stream()
