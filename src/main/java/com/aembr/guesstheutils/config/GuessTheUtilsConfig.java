@@ -114,7 +114,7 @@ public class GuessTheUtilsConfig {
     @SerialEntry
     @AutoGen(category = "modules", group = "shortcut_reminder")
     @EnumCycler
-    public ShortcutFilterType shortcutReminderFilterType = ShortcutFilterType.CJK;
+    public ShortcutFilterType shortcutReminderFilterType = ShortcutFilterType.NON_ASCII;
 
     // CHAT COOLDOWN
 
