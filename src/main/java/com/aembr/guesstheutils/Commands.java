@@ -3,6 +3,7 @@ package com.aembr.guesstheutils;
 import com.aembr.guesstheutils.utils.Message;
 import com.aembr.guesstheutils.utils.Scheduler;
 import com.aembr.guesstheutils.utils.TranslationData;
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
@@ -11,9 +12,7 @@ import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Util;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class Commands {
     public static void register(CommandDispatcher<FabricClientCommandSource> dispatcher) {
@@ -22,134 +21,117 @@ public class Commands {
                         .then(ClientCommandManager.literal("save")
                             .executes((command) -> {
                                 GuessTheUtils.replay.save();
-                                return 1;
+                                return Command.SINGLE_SUCCESS;
                             }))
 
                         .then(ClientCommandManager.literal("open")
                             .executes((command) -> {
                                 Util.getOperatingSystem().open(Replay.replayDir);
-                                return 1;
+                                return Command.SINGLE_SUCCESS;
                             })))
 
 //                .then(ClientCommandManager.literal("livetest")
 //                        .executes((command) -> {
 //                            GuessTheUtils.testing = !GuessTheUtils.testing;
 //                            if (GuessTheUtils.testing) GuessTheUtils.liveE2ERunner.currentTick = 0;
-//                            return 1;
+//                            return Command.SINGLE_SUCCESS;
 //                        }))
 
                 .then(ClientCommandManager.literal("config")
                         .executes((command) -> {
                             GuessTheUtils.openConfig = true;
-                            return 1;
+                            return Command.SINGLE_SUCCESS;
                         }))
         );
 
-        dispatcher.register(ClientCommandManager.literal("translate")
-                .executes(command -> {
-                    Message.displayMessage(Text.literal("/translate usage:\n")
-                            .append("/translate <language> <theme> for a specific language translation.\n")
-                            .append("/translate all <theme> for all translations.\n")
-                            .append("<theme> accepts shortcuts, lowercase, or without spaces."));
-                    return 1;
-                })
-                .then(ClientCommandManager.argument("language", StringArgumentType.string())
-                        .then(ClientCommandManager.argument("theme", StringArgumentType.greedyString())
-                                .executes(command -> {
-                                    String lang = StringArgumentType.getString(command, "language");
-                                    String theme = StringArgumentType.getString(command, "theme");
-                                    printTranslation(lang, theme);
-                                    return 1;
+        dispatcher.register(ClientCommandManager.literal("gettranslation")
+                .then(ClientCommandManager.argument("theme", StringArgumentType.string())
+                        .suggests((ctx, builder) -> {
+                            TranslationData.entries.stream()
+                                    .map(TranslationData.TranslationDataEntry::theme)
+                                    .map(theme -> theme.replace(" ", "_"))
+                                    .filter(theme -> theme.toLowerCase().contains(builder.getRemainingLowerCase()))
+                                    .forEach(builder::suggest);
+                            return builder.buildFuture();
+                        })
+                        .then(ClientCommandManager.argument("language", StringArgumentType.word())
+                                .suggests((ctx, builder) -> {
+                                    String themeWithUnderscores = StringArgumentType.getString(ctx, "theme");
+                                    String theme = themeWithUnderscores.replace("_", " ");
+
+                                    TranslationData.entries.stream()
+                                            .filter(entry -> entry.theme().equals(theme))
+                                            .findFirst()
+                                            .ifPresent(entry -> {entry.translations().entrySet().stream()
+                                                        .filter(langEntry -> langEntry.getValue().isApproved())
+                                                        .map(Map.Entry::getKey)
+                                                        .filter(langCode -> langCode.toLowerCase().contains(builder.getRemainingLowerCase()))
+                                                        .forEach(builder::suggest);
+                                            });
+                                    return builder.buildFuture();
+                                })
+                                .executes(ctx -> {
+                                    String themeWithUnderscores = StringArgumentType.getString(ctx, "theme");
+                                    String theme = themeWithUnderscores.replace("_", " ");
+                                    String languageCode = StringArgumentType.getString(ctx, "language");
+                                    printTranslation(languageCode, theme);
+                                    return Command.SINGLE_SUCCESS;
                                 }))));
 
         dispatcher.register(ClientCommandManager.literal("qgtb")
                 .executes(command -> {
                     Message.sendMessage("/queue build_battle_guess_the_build");
-                    return 1;
+                    return Command.SINGLE_SUCCESS;
                 }));
 
         dispatcher.register(ClientCommandManager.literal("lrj")
                 .executes(command -> {
                     Message.sendMessage("/hub");
                     Scheduler.schedule(20, () -> Message.sendMessage("/back"));
-                    return 1;
+                    return Command.SINGLE_SUCCESS;
                 }));
     }
 
     private static void printTranslation(String lang, String theme) {
-        TranslationData.TranslationDataEntry entry = TranslationData.entries.stream()
-                .filter(e -> e.theme().equalsIgnoreCase(theme)
-                        || e.theme().replace(" ", "").equalsIgnoreCase(theme.replace(" ", ""))
-                        || Objects.equals(e.shortcut(), theme)).findAny().orElse(null);
+        TranslationData.entries.stream()
+                .filter(entry -> entry.theme().equals(theme))
+                .findFirst()
+                .ifPresent(entry -> {
+                    TranslationData.Translation translation = entry.translations().get(lang);
 
-        if (entry == null) {
-            Message.displayMessage(Text.literal("Theme not found!").formatted(Formatting.RED));
-            return;
-        }
+                    if (translation != null && translation.isApproved()) {
+                        //? if >=1.21.5 {
+                        ClickEvent clickEvent = new ClickEvent.SuggestCommand("➤ " + translation.translation());
+                        //?} else {
+                        /*ClickEvent clickEvent = new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "➤ " + translation.translation());
+                         *///?}
 
-        if (lang.equals("all")) {
-            MutableText result = Text.empty();
-            Map<String, TranslationData.Translation> translations = entry.translations();
-            for (Map.Entry<String, TranslationData.Translation> translation : translations.entrySet()) {
-                if (!translation.getValue().isApproved()) continue;
+                        //? if >=1.21.5 {
+                        HoverEvent hoverEvent = new HoverEvent.ShowText(Text.literal("Click to draft this translation"));
+                        //?} else {
+                        /*HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("Click to draft this translation");
+                         *///?}
 
-                //? if >=1.21.5 {
-                ClickEvent clickEvent = new ClickEvent.CopyToClipboard(translation.getValue().translation());
-                //?} else {
-                /*ClickEvent clickEvent = new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD,
-                        translation.getValue().translation());
-                 *///?}
+                        Text draftButtonText = Text.literal(" [Draft]").setStyle(Style.EMPTY
+                                .withClickEvent(clickEvent)
+                                .withHoverEvent(hoverEvent)
+                                .withColor(Formatting.YELLOW));
 
-                result.append(Text.literal("\n • ").formatted(Formatting.GRAY))
-                        .append(Text.literal(translation.getKey()).formatted(Formatting.AQUA))
-                        .append(Text.literal(": ").formatted(Formatting.GRAY))
-                        .append(Text.literal(translation.getValue().translation())
-                                .formatted(Formatting.GOLD).formatted(Formatting.BOLD))
-                        .append(Text.literal(" [Copy]").setStyle(
-                                Style.EMPTY.withClickEvent(clickEvent).withColor(Formatting.YELLOW)));
-            }
-
-            Message.displayMessage(Text.empty().append(Text.literal("All translations for theme ").formatted(Formatting.GRAY))
-                    .append(Text.literal(entry.theme()).formatted(Formatting.GREEN))
-                    .append(":").formatted(Formatting.GRAY)
-                    .append(result));
-            return;
-        }
-
-        TranslationData.Translation translation = entry.translations().get(lang.toLowerCase());
-        if (translation == null) {
-            List<String> validLanguages = entry.translations().entrySet().stream()
-                            .filter(e -> e.getValue().isApproved())
-                    .map(Map.Entry::getKey).toList();
-
-            Message.displayMessage(Text.literal("Language not found. Try /translate <theme> for " +
-                            "all translations, or pick a language from the following list:\n")
-                    .append(Text.literal(validLanguages.toString())).formatted(Formatting.RED));
-            return;
-        }
-
-        if (!translation.isApproved()) {
-            Message.displayMessage(Text.empty().append(Text.literal(entry.theme()).formatted(Formatting.GREEN))
-                    .append(Text.literal(" has no approved ").formatted(Formatting.RED))
-                    .append(Text.literal(lang.toLowerCase()).formatted(Formatting.AQUA))
-                    .append(Text.literal(" translation.").formatted(Formatting.RED)));
-            return;
-        }
-
-        //? if >=1.21.5 {
-        ClickEvent clickEvent = new ClickEvent.CopyToClipboard(translation.translation());
-        //?} else {
-        /*ClickEvent clickEvent = new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD,
-                translation.translation());
-         *///?}
-
-        Message.displayMessage(Text.empty().append(Text.literal(lang.toLowerCase()).formatted(Formatting.AQUA))
-                .append(" translation for ").formatted(Formatting.GRAY)
-                .append(Text.literal(entry.theme()).formatted(Formatting.GREEN))
-                .append(": ").formatted(Formatting.GRAY)
-                .append(Text.literal(translation.translation())
-                        .formatted(Formatting.GOLD).formatted(Formatting.BOLD))
-                .append(Text.literal(" [Copy]").setStyle(
-                        Style.EMPTY.withClickEvent(clickEvent).withColor(Formatting.YELLOW))));
+                        Message.displayMessage(Text.empty()
+                                .append(Text.literal(theme).formatted(Formatting.GREEN))
+                                .append(Text.literal(" in ").formatted(Formatting.GRAY))
+                                .append(Text.literal(lang).formatted(Formatting.AQUA))
+                                .append(Text.literal(": ").formatted(Formatting.GRAY))
+                                .append(Text.literal(translation.translation()).formatted(Formatting.GOLD).formatted(Formatting.BOLD))
+                                .append(draftButtonText));
+                    } else {
+                        Message.displayMessage(Text.empty()
+                                .append(Text.literal("No approved translation found for ").formatted(Formatting.RED))
+                                .append(Text.literal(theme).formatted(Formatting.GREEN))
+                                .append(Text.literal(" in ").formatted(Formatting.RED))
+                                .append(Text.literal(lang).formatted(Formatting.AQUA))
+                                .append(Text.literal(".").formatted(Formatting.RED)));
+                    }
+                });
     }
 }

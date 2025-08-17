@@ -2,7 +2,7 @@
 ## New Stuff
 - Shortcuts reminder now uses the same list as https://gtb.zmh.me/themes, updating automatically and independently of the mod itself. (thanks zmhprogram)
 - Added setting to filter CJK or non-ASCII shortcuts from reminder messages.
-- Added `/translate <language> <theme>` command to get approved translations of a given theme. (thanks sophie.fox)
+- Added `/gettranslation <theme> <language>` command to get approved translations of a given theme and quickly paste them in chat. (thanks sophie.fox)
 - Added `/qgtb` command to quickly queue/requeue GTB. (thanks sophie.fox)
 - Added `/lrj` command to automatically leave and rejoin.
 - Changed theme length display to show individual word lengths.
