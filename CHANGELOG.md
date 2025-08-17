@@ -7,7 +7,7 @@
 - Added `/lrj` command to automatically leave and rejoin.
 - Changed theme length display to show individual word lengths.
 - Changed the location where the mod stores its configs and files to `<minecraft_root>/config/guesstheutils`. Your settings will be reset. Sorry!
-- Score tracker is now lenient when rejoining, only disabling if score mismatches are actually detected. (thanks sophie.fox)
+- Score tracker is now more lenient when rejoining, only disabling if score mismatches are actually detected. (thanks sophie.fox)
 - Added options for scoreboard background opacity and highlight strength.
 - Added an easy way to open replays folder by clicking on the replay saved message, or executing `/guesstheutils replay open`.
 ## Bug Fixes
