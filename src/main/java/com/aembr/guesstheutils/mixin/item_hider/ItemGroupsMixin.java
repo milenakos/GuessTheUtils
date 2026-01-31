@@ -34,7 +34,7 @@ public abstract class ItemGroupsMixin {
 
     @Inject(method = "updateDisplayContext", at = @At("HEAD"), cancellable = true)
     private static void trackLastVersion(FeatureSet enabledFeatures, boolean operatorEnabled, RegistryWrapper.WrapperLookup lookup, CallbackInfoReturnable<Boolean> cir) {
-        if (GuessTheUtils.events.gameState != state
+        if ((GuessTheUtils.events != null && GuessTheUtils.events.gameState != state)
                 || moduleEnabled != GuessTheUtilsConfig.CONFIG.instance().enableDisallowedItemHiderModule) {
             state = GuessTheUtils.events.gameState;
             moduleEnabled = GuessTheUtilsConfig.CONFIG.instance().enableDisallowedItemHiderModule;

@@ -45,8 +45,13 @@ public class Utils {
     public static List<Text> collectTabListEntries(MinecraftClient client) {
         if (client.player == null) return new ArrayList<>();
 
-        return client.player.networkHandler.getListedPlayerListEntries().stream().map(entry -> {
-            MutableText entryText = entry.getDisplayName().copy();
+        return client.world.getPlayers().stream().map(entry -> {
+            MutableText entryText;
+            if (entry.getDisplayName() != null) {
+                entryText = entry.getDisplayName().copy();
+            } else {
+                entryText = entry.getName().copy();
+            }
             return (Text) entryText;
         }).toList();
     }

@@ -154,23 +154,6 @@ public class GTBEvents {
                 currentTheme = theme;
             }
         }
-
-        // Extract true scores
-        if (gameState.equals(GameState.ROUND_BUILD) || gameState.equals(GameState.ROUND_PRE) || gameState.equals(GameState.ROUND_END)) {
-            List<TrueScore> trueScoreEntries = getTrueScoresFromScoreboard(scoreboardLines);
-            //System.out.println("Got true scores from scoreboard: " + trueScoreEntries);
-            //System.out.println("True score history is " + trueScoreHistory.size());
-            if (trueScoreHistory.size() == 2) {
-                if (trueScoreEntries.equals(trueScoreHistory.get(0))
-                        && trueScoreEntries.equals(trueScoreHistory.get(1))
-                        && !Objects.equals(trueScoreEntries, trueScores)) {
-                    trueScores = trueScoreEntries;
-
-                    emit(new TrueScoresUpdateEvent(trueScores));
-                }
-            }
-            trueScoreHistory.add(trueScoreEntries);
-        }
     }
 
     @SuppressWarnings("SequencedCollectionMethodCanBeUsed")
@@ -449,24 +432,6 @@ public class GTBEvents {
                 // technically, it's possible for a player named "Time" to be on the scoreboard with 0 points
                 .anyMatch(line -> line.startsWith("Time: 0") && line.length() > 7)) return GameState.ROUND_BUILD;
         return null;
-    }
-
-    public List<TrueScore> getTrueScoresFromScoreboard(List<Text> scoreboardLines) {
-        List<TrueScore> trueScores = new ArrayList<>();
-        List<String> stringLines = scoreboardLines.stream().map(line -> Formatting.strip(line.getString())).toList();
-
-        for (int i = 0; i < stringLines.size(); i++) {
-            String[] parts = stringLines.get(i).split(": ");
-            if (parts.length != 2) continue;
-            if (!parts[0].contains(" ") && parts[1].matches("\\d{1,2}")) {
-                Text line = scoreboardLines.get(i);
-                Formatting rank = Formatting.byName(Objects.requireNonNull(
-                        line.getSiblings().get(0).getSiblings().get(0).getStyle().getColor()).getName());
-                trueScores.add(new TrueScore(new FormattedName(parts[0], rank), Integer.parseInt(parts[1])));
-            }
-        }
-
-        return trueScores;
     }
 
     public void changeState(GameState newState) {
