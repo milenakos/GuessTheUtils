@@ -54,7 +54,7 @@ public class ChatCooldownTimer extends GTBEvents.Module /*? >=1.21.6 {*/ impleme
                 || !GuessTheUtilsConfig.CONFIG.instance().chatCooldownTimer) return;
         String timerText = formatCooldown(cooldown);
         TextRenderer renderer = MinecraftClient.getInstance().textRenderer;
-        int x1 = ctx.getScaledWindowWidth() / 2 + 7;
+        int x1 = ctx.getScaledWindowWidth() / 2 - renderer.getWidth(timerText) / 2;
         int y1 = ctx.getScaledWindowHeight() / 2 - renderer.fontHeight - 7;
         int x2 = x1 + renderer.getWidth(timerText);
         int y2 = y1 + renderer.fontHeight - 1;
