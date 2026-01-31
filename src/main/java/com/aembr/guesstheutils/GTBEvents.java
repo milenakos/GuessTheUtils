@@ -184,11 +184,15 @@ public class GTBEvents {
             String name = playerEntry.getSiblings().isEmpty() ?
                     playerEntry.getString() : playerEntry.getSiblings().get(1).getLiteralString();
 
-            Text title = playerEntry.getSiblings().isEmpty() ?
-                    null : playerEntry.getSiblings().get(0).getSiblings().get(0);
+            Text title = null;
+            Text emblem = null;
+            if (!playerEntry.getSiblings().isEmpty()) {
+                Text firstSibling = playerEntry.getSiblings().get(0);
+                List<Text> titleSiblings = firstSibling.getSiblings();
+                title = titleSiblings.isEmpty() ? null : titleSiblings.get(0);
 
-            Text emblem = playerEntry.getSiblings().isEmpty() ?
-                    null : Text.empty();
+                emblem = Text.empty();
+            }
 
             if (emblem != null && !playerEntry.getSiblings().get(2).getSiblings().isEmpty()) {
                 emblem = playerEntry.getSiblings().get(2).getSiblings()

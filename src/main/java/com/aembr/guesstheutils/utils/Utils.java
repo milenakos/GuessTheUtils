@@ -18,7 +18,7 @@ public class Utils {
         ClientPlayerEntity player = client.player;
         if (player == null) return new ArrayList<>();
 
-        Scoreboard scoreboard = player.getScoreboard();
+        Scoreboard scoreboard = player.networkHandler.getScoreboard();
         ScoreboardObjective objective = scoreboard.getObjectiveForSlot(ScoreboardDisplaySlot.FROM_ID.apply(1));
 
         for (ScoreHolder scoreHolder : scoreboard.getKnownScoreHolders()) {
@@ -46,12 +46,7 @@ public class Utils {
         if (client.player == null) return new ArrayList<>();
 
         return client.player.networkHandler.getListedPlayerListEntries().stream().map(entry -> {
-            MutableText entryText;
-            if (entry.getDisplayName() != null) {
-                entryText = entry.getDisplayName().copy();
-            } else {
-                entryText = Team.decorateName(entry.getScoreboardTeam(), Text.literal(entry.getProfile().getName()));
-            }
+            MutableText entryText = entry.getDisplayName().copy();
             return (Text) entryText;
         }).toList();
     }

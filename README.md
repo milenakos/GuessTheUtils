@@ -1,1 +1,1 @@
-Description available on the [Modrith page](https://modrinth.com/mod/guesstheutils).
+Long term support of [aembur's GuessTheUtils mod](https://modrinth.com/mod/guesstheutils). There won't be any new features, just minor bug fixes and ports to latest Minecraft versions. (I'm sorry idk java or minecraft mods that well)

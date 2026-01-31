@@ -84,12 +84,11 @@ public class ChatCooldownTimer extends GTBEvents.Module /*? >=1.21.6 {*/ impleme
                 || GuessTheUtilsConfig.CONFIG.instance().chatCooldownPingVolume == 0) return;
         if (GuessTheUtils.CLIENT.player == null || GuessTheUtils.CLIENT.world == null) return; {
             GuessTheUtils.CLIENT.execute(() -> {
-                Entity camera = GuessTheUtils.CLIENT.cameraEntity;
-                double x = (camera != null) ? camera.getPos().x : GuessTheUtils.CLIENT.player.getX();
-                double y = (camera != null) ? camera.getPos().y : GuessTheUtils.CLIENT.player.getY();
-                double z = (camera != null) ? camera.getPos().z : GuessTheUtils.CLIENT.player.getZ();
-                GuessTheUtils.CLIENT.world.playSound(/*? if >=1.21.5 {*/ camera ,/*?}*/ x, y, z, sound, SoundCategory.PLAYERS,
-                        GuessTheUtilsConfig.CONFIG.instance().chatCooldownPingVolume * 0.01F, pitch * 0.1F /*? if <1.21.5 {*//*, false*//*?}*/);
+                double x = GuessTheUtils.CLIENT.player.getX();
+                double y = GuessTheUtils.CLIENT.player.getY();
+                double z = GuessTheUtils.CLIENT.player.getZ();
+                GuessTheUtils.CLIENT.world.playSound(GuessTheUtils.CLIENT.player, x, y, z, sound, SoundCategory.PLAYERS,
+                        GuessTheUtilsConfig.CONFIG.instance().chatCooldownPingVolume * 0.01F, pitch * 0.1F);
             });
         }
     }

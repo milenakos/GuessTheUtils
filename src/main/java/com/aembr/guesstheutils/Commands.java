@@ -109,7 +109,7 @@ public class Commands {
                         //? if >=1.21.5 {
                         HoverEvent hoverEvent = new HoverEvent.ShowText(Text.literal("Click to draft this translation"));
                         //?} else {
-                        /*HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("Click to draft this translation");
+                        /*HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("Click to draft this translation"));
                          *///?}
 
                         Text draftButtonText = Text.literal(" [Draft]").setStyle(Style.EMPTY
