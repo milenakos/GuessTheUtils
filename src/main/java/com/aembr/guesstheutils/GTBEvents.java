@@ -170,20 +170,30 @@ public class GTBEvents {
             Text title = null;
             Text emblem = null;
             if (!playerEntry.getSiblings().isEmpty()) {
-                Text firstSibling = playerEntry.getSiblings().get(0);
-                List<Text> titleSiblings = firstSibling.getSiblings();
-                title = titleSiblings.isEmpty() ? null : titleSiblings.get(0);
+                if (playerEntry.getSiblings().get(0).getSiblings().isEmpty()) {
+                    // new
+                    title = playerEntry.getSiblings().get(0);
+                } else {
+                    // old
+                    title = playerEntry.getSiblings().get(0).getSiblings().get(0);
+                }
 
-                emblem = Text.empty();
-            }
-
-            if (emblem != null && !playerEntry.getSiblings().get(2).getSiblings().isEmpty()) {
-                emblem = playerEntry.getSiblings().get(2).getSiblings()
+                if (playerEntry.getSiblings().get(2).getSiblings().isEmpty()) {
+                    // new
+                    emblem = playerEntry.getSiblings().get(2);
+                } else {
+                    // old
+                    emblem = playerEntry.getSiblings().get(2).getSiblings()
                         .get(playerEntry.getSiblings().get(2).getSiblings().size() - 1);
-                if (Formatting.strip(emblem.getString()).startsWith(" ")) {
-                    // white emblems have a space at the start and just don't have any formatting at all
-                    emblem = Text.literal(Formatting.strip(emblem.getString().substring(1)))
-                            .formatted(Formatting.WHITE);
+                }
+
+                // trim spaces
+                title = Text.literal(title.getString().trim()).setStyle(title.getStyle());
+                emblem = Text.literal(emblem.getString().trim()).setStyle(emblem.getStyle());
+
+                if (emblem.getString().equals("")) {
+                    // empty emblem
+                    emblem = Text.empty();
                 }
             }
 
