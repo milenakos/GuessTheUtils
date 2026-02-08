@@ -577,7 +577,8 @@ public class DisallowedItemHider {
     );
 
     public static boolean isAllowed(Item item) {
-        if (GuessTheUtils.events.gameState.equals(GTBEvents.GameState.ROUND_BUILD)
+        if ((GuessTheUtils.events.gameState.equals(GTBEvents.GameState.ROUND_BUILD)
+            || GuessTheUtils.events.gameState.equals(GTBEvents.GameState.ROUND_PRE))
                 && GuessTheUtilsConfig.CONFIG.instance().enableDisallowedItemHiderModule) {
             return ALLOWED_ITEMS.contains(item);
         }
