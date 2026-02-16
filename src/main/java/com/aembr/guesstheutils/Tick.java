@@ -66,8 +66,13 @@ public class Tick {
 
     public static List<String> serializeList(List<Text> input) {
         Gson gson = new Gson();
-        return input.stream().map(text ->
-                gson.toJson(TextCodecs.CODEC.encodeStart(JsonOps.INSTANCE, text).getOrThrow())).toList();
+        return input.stream().map(text -> {
+            var result = TextCodecs.CODEC.encodeStart(JsonOps.INSTANCE, text);
+            return result
+                .map(json -> gson.toJson(json))
+                .result()
+                .orElseGet(() -> gson.toJson(JsonNull.INSTANCE));
+        }).toList();
     }
 
     public SerializedTick serialize() {
