@@ -471,12 +471,22 @@ public class GTBEvents {
             if (!parts[0].contains(" ") && parts[1].matches("\\d{1,2}")) {
                 Text line = scoreboardLines.get(i);
                 TextColor color = null;
+                Formatting rank = null;
                 if (line.getSiblings().get(0).getSiblings().isEmpty()) {
-                    color = line.getSiblings().get(0).getStyle().getColor();
+                    if (line.getSiblings().get(0).getStyle().getColor() != null) {
+                        color = line.getSiblings().get(0).getStyle().getColor();
+                        rank = Formatting.byName(color.getName());
+                    } else {
+                        String content = line.getSiblings().get(0).getContent().toString();
+                        if (content.length() >= 2 && content.charAt(0) == '§') {
+                            char colorChar = content.charAt(1);
+                            rank = Formatting.byCode(colorChar);
+                        }
+                    }
                 } else {
                     color = line.getSiblings().get(0).getSiblings().get(0).getStyle().getColor();
+                    rank = Formatting.byName(color.getName());
                 }
-                Formatting rank = Formatting.byName(color.getName());
                 trueScores.add(new TrueScore(new FormattedName(parts[0], rank), Integer.parseInt(parts[1])));
             }
         }

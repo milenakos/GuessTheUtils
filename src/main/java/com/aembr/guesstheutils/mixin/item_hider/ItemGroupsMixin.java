@@ -36,7 +36,9 @@ public abstract class ItemGroupsMixin {
     private static void trackLastVersion(FeatureSet enabledFeatures, boolean operatorEnabled, RegistryWrapper.WrapperLookup lookup, CallbackInfoReturnable<Boolean> cir) {
         if ((GuessTheUtils.events != null && GuessTheUtils.events.gameState != state)
                 || moduleEnabled != GuessTheUtilsConfig.CONFIG.instance().enableDisallowedItemHiderModule) {
-            state = GuessTheUtils.events.gameState;
+            if (GuessTheUtils.events != null) {
+                state = GuessTheUtils.events.gameState;
+            }
             moduleEnabled = GuessTheUtilsConfig.CONFIG.instance().enableDisallowedItemHiderModule;
             displayContext = new ItemGroup.DisplayContext(enabledFeatures, operatorEnabled, lookup);
             updateEntries(displayContext);

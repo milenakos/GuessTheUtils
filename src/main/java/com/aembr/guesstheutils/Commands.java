@@ -87,7 +87,7 @@ public class Commands {
         dispatcher.register(ClientCommandManager.literal("lrj")
                 .executes(command -> {
                     Message.sendMessage("/hub");
-                    Scheduler.schedule(20, () -> Message.sendMessage("/back"));
+                    Scheduler.schedule(30, () -> Message.sendMessage("/back"));
                     return Command.SINGLE_SUCCESS;
                 }));
     }

@@ -1,1 +1,2 @@
 - Add unit tests for new scoreboard parser; emblem/title parser.
+- Add new emblems to GTBEvents
