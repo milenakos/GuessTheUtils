@@ -59,7 +59,7 @@ public class GTBEvents {
     private final Utils.FixedSizeBuffer<List<Component>> scoreboardLineHistory = new Utils.FixedSizeBuffer<>(3);
     private final Utils.FixedSizeBuffer<List<Component>> playerListEntryHistory = new Utils.FixedSizeBuffer<>(3);
 
-    private final String[] validEmblems = new String[]{"≈", "α", "Ω", "$", "π", "ƒ"};
+    private final String[] validEmblems = new String[]{"≈", "α", "Ω", "$", "π", "ƒ", "☺", "☀", "★", "⚑", "�", "»", "⧈"};
     private final String[] validTitles = new String[]{"Rookie", "Untrained", "Amateur", "Prospect", "Apprentice",
             "Experienced", "Seasoned", "Trained", "Skilled", "Talented", "Professional", "Artisan", "Expert",
             "Master", "Legend", "Grandmaster", "Celestial", "Divine", "Ascended"};
