@@ -70,7 +70,15 @@ loom {
 }
 
 java {
-	targetCompatibility = JavaVersion.VERSION_25
+	withSourcesJar()
+	val requiresJava21: Boolean = stonecutter.eval(stonecutter.current.version, ">=1.20.6")
+	val requiresJava25: Boolean = stonecutter.eval(stonecutter.current.version, ">=26.1")
+	val javaVersion: JavaVersion =
+		if (requiresJava25) JavaVersion.VERSION_25
+		else if (requiresJava21) JavaVersion.VERSION_21
+		else JavaVersion.VERSION_17
+	targetCompatibility = javaVersion
+	sourceCompatibility = javaVersion
 }
 
 tasks {
