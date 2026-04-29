@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Gui.class)
 public class GuiMixin {
-    @Inject(at = @At("HEAD"), method = "renderScoreboardSidebar(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V", cancellable = true)
-    private void onRenderScoreboardSidebar(GuiGraphicsExtractor context, DeltaTracker tickCounter, CallbackInfo ci) {
+    @Inject(at = @At("HEAD"), method = "extractScoreboardSidebar(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V", cancellable = true)
+    private void onExtractScoreboardSidebar(GuiGraphicsExtractor context, DeltaTracker tickCounter, CallbackInfo ci) {
         if (CustomScoreboard.isRendering()) ci.cancel();
     }
 }

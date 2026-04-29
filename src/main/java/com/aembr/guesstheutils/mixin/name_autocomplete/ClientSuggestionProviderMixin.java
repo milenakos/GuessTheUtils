@@ -11,7 +11,7 @@ import java.util.Collection;
 @Mixin(ClientSuggestionProvider.class)
 public class ClientSuggestionProviderMixin {
 
-    @ModifyReturnValue(method = "getCustomTabSugggestions", at = @At("RETURN"))
+    @ModifyReturnValue(method = "getCustomTabSuggestions", at = @At("RETURN"))
     private Collection<String> addNamesToSuggestions(Collection<String> original) {
         original.addAll(GuessTheUtils.nameAutocomplete.getNames());
         return original;
