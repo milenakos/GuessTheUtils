@@ -81,8 +81,8 @@ public class GuessTheUtils implements ClientModInitializer {
 
     private void onStartTick(Minecraft client) {
         if (openConfig) {
-            Screen configScreen = GuessTheUtilsConfig.createScreen(client.screen);
-            client.setScreen(configScreen);
+            Screen configScreen = GuessTheUtilsConfig.createScreen(client.gui.screen());
+            client.gui.setScreen(configScreen);
             openConfig = false;
         }
 
@@ -121,7 +121,7 @@ public class GuessTheUtils implements ClientModInitializer {
 
         onScoreboardUpdate(Utils.getScoreboardLines(client));
         onPlayerListUpdate(Utils.collectTabListEntries(client));
-        Component screenTitle = CLIENT.screen == null ? Component.empty() : CLIENT.screen.getTitle();
+        Component screenTitle = CLIENT.gui.screen() == null ? Component.empty() : CLIENT.gui.screen().getTitle();
         onScreenUpdate(screenTitle);
     }
 

@@ -10,7 +10,7 @@ public class Message {
             if (message.startsWith("/")) {
                 GuessTheUtils.CLIENT.player.connection.sendCommand(message.substring(1));
             } else {
-                GuessTheUtils.CLIENT.gui.getChat().addRecentChat(message);
+                GuessTheUtils.CLIENT.gui.hud.getChat().addRecentChat(message);
                 GuessTheUtils.CLIENT.player.connection.sendChat(message);
             }
         }

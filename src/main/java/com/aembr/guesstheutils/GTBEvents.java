@@ -223,7 +223,7 @@ public class GTBEvents {
             if (styleColor == null) {
                 continue;
             }
-            ChatFormatting rankColor = ChatFormatting.getByName(styleColor.serialize());
+            ChatFormatting rankColor = ChatFormatting.valueOf(styleColor.serialize().toUpperCase());
 
 
             InitialPlayerData player = players.stream().filter(p -> p.name.equals(name)).findAny().orElse(null);
@@ -371,7 +371,7 @@ public class GTBEvents {
             if (gameState.equals(GameState.ROUND_BUILD) && !strMessage.contains(":")
                     && strMessage.endsWith(" correctly guessed the theme!")) {
                 String name = strMessage.replace(" correctly guessed the theme!", "");
-                ChatFormatting rank = ChatFormatting.getByName(Objects.requireNonNull(message.getSiblings().get(0).getStyle().getColor()).serialize());
+                ChatFormatting rank = ChatFormatting.valueOf(Objects.requireNonNull(message.getSiblings().get(0).getStyle().getColor()).serialize().toUpperCase());
                 correctGuessers.add(new FormattedName(name, rank));
             }
 
@@ -475,7 +475,7 @@ public class GTBEvents {
                 if (line.getSiblings().get(0).getSiblings().isEmpty()) {
                     if (line.getSiblings().get(0).getStyle().getColor() != null) {
                         color = line.getSiblings().get(0).getStyle().getColor();
-                        rank = ChatFormatting.getByName(color.serialize());
+                        rank = ChatFormatting.valueOf(color.serialize().toUpperCase());
                     } else {
                         String content = line.getSiblings().get(0).getContents().toString();
                         if (content.length() >= 2 && content.charAt(0) == '§') {
@@ -485,7 +485,7 @@ public class GTBEvents {
                     }
                 } else {
                     color = line.getSiblings().get(0).getSiblings().get(0).getStyle().getColor();
-                    rank = ChatFormatting.getByName(color.serialize());
+                    rank = ChatFormatting.valueOf(color.serialize().toUpperCase());
                 }
                 trueScores.add(new TrueScore(new FormattedName(parts[0], rank), Integer.parseInt(parts[1])));
             }
